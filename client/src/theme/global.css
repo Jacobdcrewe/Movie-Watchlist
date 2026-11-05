@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   margin: 0;
@@ -34,6 +38,15 @@ textarea {
 
 button {
   cursor: pointer;
+}
+
+/*
+ * Icon-only buttons: no default padding, so the icon centres in the full box.
+ * :where() gives this zero specificity, so any button that sets its own padding
+ * (e.g. icon + text buttons like "Remove" — :only-child ignores text) keeps it.
+ */
+:where(button:has(> svg:only-child)) {
+  padding: 0;
 }
 
 button:focus-visible,
@@ -102,6 +115,20 @@ textarea::placeholder {
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--scroll-thumb-hover) transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  button:hover,
+  button:active,
+  button:hover svg {
+    transform: none !important;
   }
 }
 

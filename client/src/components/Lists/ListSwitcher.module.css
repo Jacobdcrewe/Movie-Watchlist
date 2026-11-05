@@ -70,8 +70,7 @@
   left: 0;
   width: min(340px, calc(100vw - 32px));
   max-height: min(60vh, 480px);
-  overflow-y: auto;
-  padding: 6px;
+  overflow: hidden;
   border-radius: var(--radius);
   background: var(--pop);
   backdrop-filter: var(--blur);
@@ -80,8 +79,18 @@
   box-shadow: var(--pop-shadow);
   display: flex;
   flex-direction: column;
-  gap: 2px;
   animation: drop 0.15s ease-out;
+}
+
+.menuScroll {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 @keyframes drop {
@@ -120,7 +129,8 @@
 .check {
   width: 16px;
   flex: none;
-  text-align: center;
+  display: grid;
+  place-items: center;
   color: var(--accent);
   font-weight: 700;
 }

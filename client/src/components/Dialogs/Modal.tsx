@@ -1,4 +1,6 @@
+import { X } from 'lucide-react';
 import { useEffect, useRef, type ReactNode } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock';
 import styles from './Dialogs.module.css';
 
 interface Props {
@@ -13,6 +15,7 @@ export function Modal({ title, onClose, children, width = 420 }: Props) {
   const panel = useRef<HTMLDivElement>(null);
   const close = useRef(onClose);
   close.current = onClose;
+  useScrollLock();
 
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -35,13 +38,15 @@ export function Modal({ title, onClose, children, width = 420 }: Props) {
     <>
       <div className={styles.scrim} onClick={onClose} />
       <div ref={panel} className={styles.modal} style={{ width }} role="dialog" aria-modal="true" aria-label={title}>
+        <div className={styles.scroller}>
         <div className={styles.head}>
           <h2 className={styles.title}>{title}</h2>
           <button type="button" data-close className={styles.close} onClick={onClose} aria-label="Close">
-            ×
+            <X size={16} strokeWidth={2} aria-hidden />
           </button>
         </div>
         {children}
+        </div>
       </div>
     </>
   );

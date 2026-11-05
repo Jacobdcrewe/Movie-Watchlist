@@ -72,13 +72,19 @@
   border: 1px solid var(--field-line);
   background: var(--field);
   color: transparent;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
 }
 .tick:disabled {
   cursor: default;
 }
 .tick:hover:not(:disabled) {
-  color: var(--faint);
+  color: var(--accent);
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  transform: scale(1.1);
+}
+.tick:active:not(:disabled) {
+  transform: scale(0.92);
 }
 .tickOn,
 .tickOn:hover {
@@ -192,15 +198,19 @@
   background: none;
   color: var(--faint);
   opacity: 0;
-  transition: opacity 0.12s, background 0.12s;
+  transition: opacity 0.12s, background 0.12s, color 0.12s, transform 0.12s;
 }
 .table tbody tr:hover .remove,
 .table tbody tr:focus-within .remove {
   opacity: 1;
 }
 .remove:hover {
-  background: var(--field);
-  color: var(--ink);
+  background: var(--danger);
+  color: #fff;
+  transform: scale(1.08);
+}
+.remove:active {
+  transform: scale(0.92);
 }
 
 @media (hover: none) {

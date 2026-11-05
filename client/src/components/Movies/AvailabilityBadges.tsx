@@ -1,11 +1,11 @@
+import { ServiceLogo } from '../ui/ServiceLogo';
 import type { Availability, Provider } from '../../../../shared/types';
-import { serviceColor } from '../../lib/serviceColor';
 import styles from './Movies.module.css';
 
 export function ServiceBadge({ provider, mine }: { provider: Provider; mine: boolean }) {
   return (
     <span className={`${styles.badge} ${mine ? styles.badgeMine : ''}`} title={mine ? `${provider.name} · on your services` : provider.name}>
-      <span className={styles.badgeDot} style={{ background: serviceColor(provider.name, provider.id) }} />
+      <ServiceLogo provider={provider} size={15} />
       <span className={styles.badgeText}>{provider.name}</span>
     </span>
   );

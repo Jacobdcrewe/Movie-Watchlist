@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import styles from './Detail.module.css';
 
 /** 5 stars; clicking the current rating clears it. */
@@ -21,10 +22,15 @@ export function StarRating({
           aria-label={`${k} star${k > 1 ? 's' : ''}`}
           className={styles.star}
           disabled={readOnly}
-          style={{ color: k <= value ? 'var(--accent)' : 'var(--field-line)' }}
           onClick={() => onChange(value === k ? 0 : k)}
         >
-          ★
+          <Star
+            size={22}
+            strokeWidth={1.7}
+            color={k <= value ? 'var(--accent)' : 'var(--faint)'}
+            fill={k <= value ? 'var(--accent)' : 'none'}
+            aria-hidden
+          />
         </button>
       ))}
     </div>

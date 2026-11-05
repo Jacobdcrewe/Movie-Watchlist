@@ -1,9 +1,11 @@
+import type { ReactNode } from 'react';
 import styles from './Toolbar.module.css';
 
 export interface Segment<K extends string> {
   key: K;
   label: string;
   count?: number;
+  icon?: ReactNode;
 }
 
 interface Props<K extends string> {
@@ -25,6 +27,7 @@ export function SegmentedControl<K extends string>({ segments, value, onChange, 
           className={`${styles.segment} ${s.key === value ? styles.active : ''}`}
           onClick={() => onChange(s.key)}
         >
+          {s.icon}
           {s.label}
           {s.count !== undefined && <span className={styles.count}>{s.count}</span>}
         </button>

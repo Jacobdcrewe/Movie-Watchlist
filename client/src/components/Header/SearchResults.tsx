@@ -1,3 +1,4 @@
+import { Check, Eye, Plus } from 'lucide-react';
 import type { SearchResult } from '../../../../shared/types';
 import { artBackground, posterUrl } from '../../lib/images';
 import styles from './SearchBox.module.css';
@@ -28,7 +29,8 @@ export function availabilitySummary(r: SearchResult, regionName: string) {
 
 export function SearchResults({ heading, results, inList, onAdd, canAdd, error, emptyText, regionName }: Props) {
   return (
-    <div className={styles.dropdown} role="listbox">
+    <div className={styles.dropdown}>
+      <div className={styles.dropdownScroll} role="listbox">
       {heading && !error && <div className={`mono-label ${styles.heading}`}>{heading}</div>}
       {results.map((r) => {
         const added = inList.has(r.id);
@@ -52,13 +54,26 @@ export function SearchResults({ heading, results, inList, onAdd, canAdd, error, 
               <div className={styles.resultAvail}>{availabilitySummary(r, regionName)}</div>
             </div>
             <span className={`${styles.addBtn} ${added || !canAdd ? styles.added : ''}`}>
-              {added ? 'Added ✓' : canAdd ? '+ Add' : 'View only'}
+              {added ? (
+                <>
+                  <Check size={13} strokeWidth={2.5} aria-hidden /> Added
+                </>
+              ) : canAdd ? (
+                <>
+                  <Plus size={13} strokeWidth={2.5} aria-hidden /> Add
+                </>
+              ) : (
+                <>
+                  <Eye size={13} strokeWidth={2} aria-hidden /> View only
+                </>
+              )}
             </span>
           </div>
         );
       })}
       {emptyText && <div className={styles.message}>{emptyText}</div>}
       {error && <div className={styles.message}>{error}</div>}
+      </div>
     </div>
   );
 }

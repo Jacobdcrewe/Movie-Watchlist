@@ -84,8 +84,6 @@
 
 .sizeIcon {
   flex: none;
-  border-radius: 3px;
-  border: 1.5px solid currentColor;
   opacity: 0.6;
 }
 

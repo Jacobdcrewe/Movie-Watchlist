@@ -1,0 +1,28 @@
+.logo {
+  flex: none;
+  display: block;
+  object-fit: cover;
+  background: var(--field);
+}
+
+.logoSlot {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+}
+
+.dot {
+  border-radius: 50%;
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.score {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

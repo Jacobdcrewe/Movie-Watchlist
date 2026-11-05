@@ -1,0 +1,118 @@
+.root {
+  position: relative;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: var(--radius-s);
+  background: var(--field);
+  border: 1px solid var(--field-line);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+.trigger:hover,
+.triggerOpen {
+  background: rgba(127, 127, 127, 0.16);
+  border-color: var(--accent-line);
+}
+
+.value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chevron {
+  flex: none;
+  opacity: 0.6;
+  transition: transform 0.2s, opacity 0.15s;
+}
+.triggerOpen .chevron {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.menu {
+  position: absolute;
+  z-index: 35;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: max(100%, 210px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: var(--radius-s);
+  background: var(--pop);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--line);
+  box-shadow: var(--pop-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  outline: none;
+  animation: drop 0.15s ease-out;
+}
+.right {
+  left: auto;
+  right: 0;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-xs);
+  font-size: 14px;
+  cursor: pointer;
+}
+.active {
+  background: rgba(127, 127, 127, 0.14);
+}
+.selected {
+  font-weight: 600;
+}
+
+.tag {
+  flex: none;
+  min-width: 30px;
+  text-align: center;
+  font: 500 11px var(--mono);
+  padding: 3px 6px;
+  border-radius: 6px;
+  background: var(--field);
+  border: 1px solid var(--field-line);
+  color: var(--sub);
+}
+.selected .tag {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--ink);
+}
+
+.label {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.check {
+  width: 16px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+}

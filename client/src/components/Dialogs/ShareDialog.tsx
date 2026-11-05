@@ -1,3 +1,4 @@
+import { X } from 'lucide-react';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import type { ListPerson, WatchList } from '../../../../shared/types';
 import { api } from '../../api/client';
@@ -124,7 +125,7 @@ export function ShareDialog({ list, myId, onClose, onChanged }: Props) {
                       disabled={busy}
                       onClick={() => run(() => api.unshare(list.id, p.userId))}
                     >
-                      ×
+                      <X size={16} strokeWidth={2} aria-hidden />
                     </button>
                   </>
                 ) : (

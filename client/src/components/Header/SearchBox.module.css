@@ -52,7 +52,6 @@
   left: 0;
   right: 0;
   top: 50px;
-  padding: 6px;
   border-radius: var(--radius);
   background: var(--pop);
   backdrop-filter: var(--blur);
@@ -61,10 +60,21 @@
   box-shadow: var(--pop-shadow);
   display: flex;
   flex-direction: column;
-  gap: 2px;
   z-index: 30;
   max-height: min(70vh, 560px);
+  overflow: hidden;
+}
+
+/* Scroll inside the rounded panel so the scrollbar stays within its shape. */
+.dropdownScroll {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .heading {
@@ -125,6 +135,9 @@
 }
 
 .addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
   font-weight: 600;
   padding: 6px 11px;

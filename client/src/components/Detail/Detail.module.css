@@ -17,7 +17,7 @@
   width: 440px;
   max-width: calc(100vw - 32px);
   border-radius: var(--radius);
-  overflow-y: auto;
+  overflow: hidden;
   background: var(--pop);
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
@@ -26,6 +26,16 @@
   display: flex;
   flex-direction: column;
   animation: slideIn 0.25s ease-out;
+}
+
+.scroller {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* Reaching the end doesn't scroll the page behind. */
+  overscroll-behavior: contain;
 }
 
 @media (max-width: 719.98px) {
@@ -97,8 +107,23 @@
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(10, 11, 15, 0.4);
   color: #fff;
+  transition: background 0.15s, transform 0.15s;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+/* Close isn't destructive: brighten and give the ✕ a quarter-turn. */
+.close:hover {
+  background: rgba(10, 11, 15, 0.7);
+}
+.close:hover svg {
+  transform: rotate(90deg);
+}
+.close:active {
+  transform: scale(0.92);
+}
+.close svg {
+  transition: transform 0.2s;
 }
 
 .body {
@@ -288,6 +313,10 @@
 }
 
 .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
   font-size: 13px;
   color: var(--sub);
   text-decoration: none;
@@ -312,6 +341,14 @@
 
 .actions {
   display: flex;
+  gap: 8px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 

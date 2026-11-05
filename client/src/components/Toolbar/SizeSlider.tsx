@@ -1,3 +1,4 @@
+import { ZoomIn, ZoomOut } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import styles from './Toolbar.module.css';
 
@@ -24,7 +25,7 @@ export function SizeSlider({ value, onChange }: Props) {
 
   return (
     <div className={`glass ${styles.size}`} title={`Card size ${pct}% · double-click to reset`}>
-      <span className={styles.sizeIcon} style={{ width: 9, height: 9 }} aria-hidden />
+      <ZoomOut className={styles.sizeIcon} size={15} strokeWidth={1.9} aria-hidden />
       <input
         type="range"
         className={styles.range}
@@ -38,7 +39,7 @@ export function SizeSlider({ value, onChange }: Props) {
         onChange={(e) => onChange(parseScale(e.target.value))}
         onDoubleClick={() => onChange(SCALE_DEFAULT)}
       />
-      <span className={styles.sizeIcon} style={{ width: 14, height: 14 }} aria-hidden />
+      <ZoomIn className={styles.sizeIcon} size={15} strokeWidth={1.9} aria-hidden />
     </div>
   );
 }

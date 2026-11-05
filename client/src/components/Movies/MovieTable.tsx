@@ -1,6 +1,8 @@
+import { Check, X } from 'lucide-react';
+import { ServiceLogo } from '../ui/ServiceLogo';
+import { Score, Stars } from '../ui/Stars';
 import type { WatchlistEntry } from '../../../../shared/types';
-import { runtime, stars } from '../../lib/format';
-import { serviceColor } from '../../lib/serviceColor';
+import { runtime } from '../../lib/format';
 import type { MovieActions } from './types';
 import styles from './MovieTable.module.css';
 
@@ -27,7 +29,7 @@ function WatchCell({ entry, myServices }: { entry: WatchlistEntry; myServices: n
     <span className={styles.services} title={ordered.map((p) => p.name).join(', ')}>
       {ordered.map((p) => (
         <span key={p.id} className={`${styles.service} ${myServices.includes(p.id) ? styles.mine : ''}`}>
-          <span className={styles.dot} style={{ background: serviceColor(p.name, p.id) }} />
+          <ServiceLogo provider={p} size={16} />
           {p.name}
         </span>
       ))}
@@ -76,7 +78,7 @@ export function MovieTable({ entries, myServices, onOpen, onToggleWatched, onRem
                     disabled={readOnly}
                     onClick={stop(() => onToggleWatched(movie.id, !watched))}
                   >
-                    ✓
+                    <Check size={12} strokeWidth={3} aria-hidden />
                   </button>
                 </td>
                 <td className={styles.title}>
@@ -90,15 +92,17 @@ export function MovieTable({ entries, myServices, onOpen, onToggleWatched, onRem
                 </td>
                 <td className={`${styles.rating} ${styles.optional}`}>
                   {rating ? (
-                    <span className={styles.stars}>{stars(rating)}</span>
+                    <Stars value={rating} size={13} />
                   ) : (
-                    <span className={styles.muted}>★ {movie.score || '—'}</span>
+                    <span className={styles.muted}>
+                      <Score value={movie.score} />
+                    </span>
                   )}
                 </td>
                 <td className={styles.actions}>
                   {!readOnly && (
                   <button type="button" className={styles.remove} title="Remove" onClick={stop(() => onRemove(movie.id))}>
-                    ×
+                    <X size={14} strokeWidth={2.2} aria-hidden />
                   </button>
                   )}
                 </td>

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { LayoutGrid, List, Rows3 } from 'lucide-react';
 import { TABS, type SortKey, type Tab, type ViewMode } from '../../lib/watchlist';
 import { SegmentedControl } from './SegmentedControl';
 import { SizeSlider } from './SizeSlider';
@@ -20,10 +21,11 @@ interface Props {
   onScale: (s: number) => void;
 }
 
-const VIEWS: { key: ViewMode; label: string }[] = [
-  { key: 'grid', label: 'Grid' },
-  { key: 'list', label: 'List' },
-  { key: 'text', label: 'Text' },
+const VIEW_ICON = { size: 15, strokeWidth: 1.9, 'aria-hidden': true } as const;
+const VIEWS: { key: ViewMode; label: string; icon: ReactNode }[] = [
+  { key: 'grid', label: 'Grid', icon: <LayoutGrid {...VIEW_ICON} /> },
+  { key: 'list', label: 'List', icon: <Rows3 {...VIEW_ICON} /> },
+  { key: 'text', label: 'Text', icon: <List {...VIEW_ICON} /> },
 ];
 
 export function Toolbar({ title, summary, tab, counts, onTab, sort, onSort, view, onView, scale, onScale }: Props) {

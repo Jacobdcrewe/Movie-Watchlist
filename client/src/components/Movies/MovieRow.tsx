@@ -1,5 +1,7 @@
+import { Check, X } from 'lucide-react';
+import { Stars } from '../ui/Stars';
 import type { WatchlistEntry } from '../../../../shared/types';
-import { dotJoin, runtime, stars } from '../../lib/format';
+import { dotJoin, runtime } from '../../lib/format';
 import { AvailabilityBadges } from './AvailabilityBadges';
 import { Poster } from './Poster';
 import type { MovieActions } from './types';
@@ -43,9 +45,7 @@ export function MovieRow({
       </div>
       {showRating && (
         <div className={styles.rowRating}>
-          <span className={styles.stars} style={{ color: rating ? 'var(--accent)' : 'var(--faint)' }}>
-            {stars(rating)}
-          </span>
+          <Stars value={rating} size={14} />
           <span className="mono-label" style={{ letterSpacing: 0 }}>
             {rating ? 'YOUR RATING' : 'NOT RATED'}
           </span>
@@ -60,10 +60,10 @@ export function MovieRow({
           aria-pressed={watched}
           onClick={stop(() => onToggleWatched(movie.id, !watched))}
         >
-          ✓
+          <Check size={16} strokeWidth={2.6} aria-hidden />
         </button>
         <button type="button" className={`${styles.listBtn} ${styles.listRemove}`} title="Remove" onClick={stop(() => onRemove(movie.id))}>
-          ×
+          <X size={16} strokeWidth={2.4} aria-hidden />
         </button>
       </div>
       )}

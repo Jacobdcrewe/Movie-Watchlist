@@ -1,3 +1,4 @@
+import { Search } from 'lucide-react';
 import { forwardRef, useState } from 'react';
 import { REGIONS, type Region, type SearchResult } from '../../../../shared/types';
 import { useSearch } from '../../hooks/useSearch';
@@ -27,10 +28,7 @@ export const SearchBox = forwardRef<HTMLInputElement, Props>(function SearchBox(
   return (
     <>
       <div className={styles.field}>
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className={styles.icon}>
-          <circle cx="7" cy="7" r="5" />
-          <path d="M11 11l3.5 3.5" />
-        </svg>
+        <Search size={16} strokeWidth={2} className={styles.icon} aria-hidden />
         <input
           ref={ref}
           className={styles.input}

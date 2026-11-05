@@ -71,6 +71,7 @@
   color: #fff;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.15s, background 0.15s, border-color 0.15s, color 0.15s, filter 0.15s;
 }
 
 .roundBtnOn {
@@ -81,6 +82,30 @@
 .removeBtn {
   font-size: 16px;
   font-weight: 400;
+}
+
+/* Hover: ✓ fills with the accent, ✕ turns red; both lift a little and press in on click. */
+.roundBtn:hover,
+.listBtn:hover {
+  transform: scale(1.1);
+}
+.roundBtn:active,
+.listBtn:active {
+  transform: scale(0.94);
+}
+.roundBtn:not(.removeBtn):not(.roundBtnOn):hover {
+  background: oklch(0.7 0.14 var(--hue) / 0.55);
+  border-color: var(--accent-line);
+}
+.roundBtnOn:hover,
+.listBtnOn:hover {
+  filter: brightness(1.12);
+}
+.removeBtn:hover,
+.listRemove:hover {
+  background: var(--danger);
+  border-color: transparent;
+  color: #fff;
 }
 
 .watchedPill {
@@ -292,6 +317,15 @@
   place-items: center;
   border: 1px solid var(--field-line);
   background: var(--field);
+}
+
+.listBtn {
+  transition: transform 0.15s, background 0.15s, border-color 0.15s, color 0.15s, filter 0.15s;
+}
+.listBtn:not(.listRemove):not(.listBtnOn):hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent);
 }
 
 .listBtnOn {

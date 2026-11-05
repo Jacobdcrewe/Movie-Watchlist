@@ -28,13 +28,14 @@
   --field-line: rgba(255, 255, 255, 0.11);
   --seg: rgba(255, 255, 255, 0.14);
   --seg-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --pop: rgba(20, 22, 30, 0.94);
+  --pop: rgba(20, 22, 30, 0.98);
   --bar-solid: rgba(20, 22, 30, 0.88);
   --accent: oklch(0.8 0.13 var(--hue));
   --on-accent: #0b0c10;
   --accent-soft: oklch(0.7 0.14 var(--hue) / 0.2);
   --accent-line: oklch(0.7 0.14 var(--hue) / 0.6);
   --scrim: rgba(0, 0, 0, 0.45);
+  --danger: oklch(0.62 0.19 25);
   --scroll-thumb: rgba(238, 240, 244, 0.16);
   --scroll-thumb-hover: rgba(238, 240, 244, 0.32);
   --blob-1: oklch(0.55 0.16 280);

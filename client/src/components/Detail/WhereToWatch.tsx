@@ -1,6 +1,6 @@
+import { ExternalLink } from 'lucide-react';
+import { ServiceLogo } from '../ui/ServiceLogo';
 import type { Availability, Provider } from '../../../../shared/types';
-import { logoUrl } from '../../lib/images';
-import { serviceColor } from '../../lib/serviceColor';
 import styles from './Detail.module.css';
 
 interface Props {
@@ -41,14 +41,9 @@ export function WhereToWatch({ availability, myServices, regionName }: Props) {
           <span className="mono-label">{g.label}</span>
           <div className={styles.table}>
             {g.rows.map(({ provider, note, highlight }) => {
-              const logo = logoUrl(provider.logoPath);
               return (
                 <div key={provider.id} className={`${styles.providerRow} ${highlight ? styles.providerMine : ''}`}>
-                  {logo ? (
-                    <img className={styles.providerLogo} src={logo} alt="" loading="lazy" />
-                  ) : (
-                    <span className={styles.providerDot} style={{ background: serviceColor(provider.name, provider.id) }} />
-                  )}
+                  <ServiceLogo provider={provider} size={22} />
                   <span className={styles.providerName}>{provider.name}</span>
                   {note && <span className={styles.providerNote}>{note}</span>}
                   <span className={styles.providerKind}>{g.label === 'STREAM' ? 'Incl.' : g.label === 'RENT' ? 'Rent' : 'Buy'}</span>
@@ -63,7 +58,7 @@ export function WhereToWatch({ availability, myServices, regionName }: Props) {
 
       {availability.link && (
         <a className={styles.link} href={availability.link} target="_blank" rel="noreferrer">
-          See prices on JustWatch ↗
+          See prices on JustWatch <ExternalLink size={13} strokeWidth={2} aria-hidden />
         </a>
       )}
     </section>

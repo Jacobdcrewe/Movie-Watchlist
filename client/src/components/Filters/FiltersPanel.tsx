@@ -1,5 +1,5 @@
+import { ServiceLogo } from '../ui/ServiceLogo';
 import type { Provider } from '../../../../shared/types';
-import { serviceColor } from '../../lib/serviceColor';
 import { Toggle } from './Toggle';
 import styles from './Filters.module.css';
 
@@ -31,7 +31,7 @@ export function FiltersPanel(p: Props) {
                 className={`${styles.chip} ${on ? styles.serviceOn : ''}`}
                 onClick={() => p.onToggleService(s.id)}
               >
-                <span className={styles.dot} style={{ background: serviceColor(s.name, s.id) }} />
+                <ServiceLogo provider={s} size={18} />
                 {s.name}
               </button>
             );

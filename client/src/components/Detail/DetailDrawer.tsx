@@ -1,7 +1,9 @@
+import { CircleCheck, RotateCcw, Trash2, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import type { WatchlistEntry, WatchlistPatch } from '../../../../shared/types';
 import { dotJoin, runtime } from '../../lib/format';
 import { backdropUrl, placeholderArt, posterUrl } from '../../lib/images';
+import { useScrollLock } from '../../hooks/useScrollLock';
 import { NotesField } from './NotesField';
 import { StarRating } from './StarRating';
 import { WhereToWatch } from './WhereToWatch';
@@ -21,6 +23,7 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
   const { movie } = entry;
   const closeRef = useRef<HTMLButtonElement>(null);
   const hero = backdropUrl(movie.backdropPath) ?? posterUrl(movie.posterPath, 'w500');
+  useScrollLock();
 
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -32,11 +35,13 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
     <>
       <div className={styles.scrim} onClick={onClose} />
       <aside className={styles.drawer} role="dialog" aria-modal="true" aria-label={movie.title}>
+        {/* Scroll inside the rounded panel so the scrollbar stays within its shape. */}
+        <div className={styles.scroller}>
         <div className={styles.hero} style={{ background: placeholderArt(movie.id) }}>
           {hero && <img className={styles.heroImg} src={hero} alt="" />}
           <div className={styles.heroFade} />
           <button ref={closeRef} type="button" className={styles.close} onClick={onClose} title="Close" aria-label="Close">
-            ×
+            <X size={18} strokeWidth={2} aria-hidden />
           </button>
         </div>
 
@@ -75,13 +80,16 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
           ) : (
           <div className={styles.actions}>
             <button type="button" className={styles.primary} onClick={() => onUpdate(movie.id, { watched: !entry.watched })}>
+              {entry.watched ? <RotateCcw size={16} strokeWidth={2} aria-hidden /> : <CircleCheck size={17} strokeWidth={2} aria-hidden />}
               {entry.watched ? 'Mark as unwatched' : 'Mark as watched'}
             </button>
             <button type="button" className={styles.secondary} onClick={() => onRemove(movie.id)}>
+              <Trash2 size={16} strokeWidth={1.9} aria-hidden />
               Remove
             </button>
           </div>
           )}
+        </div>
         </div>
       </aside>
     </>

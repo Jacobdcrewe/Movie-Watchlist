@@ -1,24 +1,19 @@
+import { MapPin } from 'lucide-react';
 import { REGIONS, type Region } from '../../../../shared/types';
-import styles from './Header.module.css';
+import { Dropdown } from '../ui/Dropdown';
 
+const OPTIONS = (Object.keys(REGIONS) as Region[]).map((r) => ({ value: r, label: REGIONS[r], tag: r }));
+
+/** Which country's streaming availability to show. */
 export function RegionSelect({ value, onChange }: { value: Region; onChange: (r: Region) => void }) {
   return (
-    <label className={styles.region}>
-      <span className="mono-label" style={{ letterSpacing: 0 }}>
-        IN
-      </span>
-      <select
-        className={styles.select}
-        value={value}
-        aria-label="Region"
-        onChange={(e) => onChange(e.target.value as Region)}
-      >
-        {(Object.keys(REGIONS) as Region[]).map((r) => (
-          <option key={r} value={r}>
-            {REGIONS[r]}
-          </option>
-        ))}
-      </select>
-    </label>
+    <Dropdown
+      label="Region"
+      value={value}
+      options={OPTIONS}
+      onChange={onChange}
+      alignRight
+      leading={<MapPin size={16} strokeWidth={1.9} style={{ opacity: 0.7, flex: 'none' }} aria-hidden />}
+    />
   );
 }

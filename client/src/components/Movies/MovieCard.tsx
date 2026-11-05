@@ -1,3 +1,4 @@
+import { Check, X } from 'lucide-react';
 import type { WatchlistEntry } from '../../../../shared/types';
 import { dotJoin, runtime } from '../../lib/format';
 import { AvailabilityBadges } from './AvailabilityBadges';
@@ -30,10 +31,10 @@ export function MovieCard({ entry, myServices, onOpen, onToggleWatched, onRemove
             aria-pressed={watched}
             onClick={stop(() => onToggleWatched(movie.id, !watched))}
           >
-            ✓
+            <Check size={16} strokeWidth={2.5} aria-hidden />
           </button>
           <button type="button" className={`${styles.roundBtn} ${styles.removeBtn}`} title="Remove" onClick={stop(() => onRemove(movie.id))}>
-            ×
+            <X size={16} strokeWidth={2.3} aria-hidden />
           </button>
         </div>
         )}
