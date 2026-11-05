@@ -1,5 +1,7 @@
 node_modules/
 dist/
-data/
 .env
 *.log
+
+# Old local SQLite data from the pre-Supabase version (root only)
+/data/
