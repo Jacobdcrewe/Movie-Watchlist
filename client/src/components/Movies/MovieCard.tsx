@@ -5,7 +5,7 @@ import { Poster } from './Poster';
 import type { MovieActions } from './types';
 import styles from './Movies.module.css';
 
-export function MovieCard({ entry, myServices, onOpen, onToggleWatched, onRemove }: { entry: WatchlistEntry } & MovieActions) {
+export function MovieCard({ entry, myServices, onOpen, onToggleWatched, onRemove, readOnly }: { entry: WatchlistEntry } & MovieActions) {
   const { movie, watched } = entry;
   const stop = (fn: () => void) => (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -21,6 +21,7 @@ export function MovieCard({ entry, myServices, onOpen, onToggleWatched, onRemove
       aria-label={movie.title}
     >
       <Poster id={movie.id} path={movie.posterPath} dim={watched} className={styles.cardPoster}>
+        {!readOnly && (
         <div className={styles.cardButtons}>
           <button
             type="button"
@@ -35,6 +36,7 @@ export function MovieCard({ entry, myServices, onOpen, onToggleWatched, onRemove
             ×
           </button>
         </div>
+        )}
         {watched && <span className={styles.watchedPill}>Watched</span>}
       </Poster>
       <div className={styles.cardText}>

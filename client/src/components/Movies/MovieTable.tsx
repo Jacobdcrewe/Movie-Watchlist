@@ -36,7 +36,7 @@ function WatchCell({ entry, myServices }: { entry: WatchlistEntry; myServices: n
 }
 
 /** Compact text table for scanning the whole list at a glance. */
-export function MovieTable({ entries, myServices, onOpen, onToggleWatched, onRemove }: Props) {
+export function MovieTable({ entries, myServices, onOpen, onToggleWatched, onRemove, readOnly }: Props) {
   const stop = (fn: () => void) => (e: React.MouseEvent) => {
     e.stopPropagation();
     fn();
@@ -71,8 +71,9 @@ export function MovieTable({ entries, myServices, onOpen, onToggleWatched, onRem
                   <button
                     type="button"
                     className={`${styles.tick} ${watched ? styles.tickOn : ''}`}
-                    title={watched ? 'Mark unwatched' : 'Mark watched'}
+                    title={readOnly ? (watched ? 'Watched' : 'Not watched') : watched ? 'Mark unwatched' : 'Mark watched'}
                     aria-pressed={watched}
+                    disabled={readOnly}
                     onClick={stop(() => onToggleWatched(movie.id, !watched))}
                   >
                     ✓
@@ -95,9 +96,11 @@ export function MovieTable({ entries, myServices, onOpen, onToggleWatched, onRem
                   )}
                 </td>
                 <td className={styles.actions}>
+                  {!readOnly && (
                   <button type="button" className={styles.remove} title="Remove" onClick={stop(() => onRemove(movie.id))}>
                     ×
                   </button>
+                  )}
                 </td>
               </tr>
             );

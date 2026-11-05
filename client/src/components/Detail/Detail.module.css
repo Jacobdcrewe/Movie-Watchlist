@@ -190,8 +190,20 @@
   padding: 0;
   transition: transform 0.1s;
 }
-.star:hover {
+.star:hover:not(:disabled) {
   transform: scale(1.12);
+}
+.star:disabled {
+  cursor: default;
+}
+
+.readOnlyNote {
+  font-size: 13px;
+  color: var(--sub);
+  padding: 12px 14px;
+  border-radius: var(--radius-s);
+  border: 1px dashed var(--field-line);
+  text-align: center;
 }
 
 .section {

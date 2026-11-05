@@ -1,0 +1,247 @@
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--scrim);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fade 0.18s ease-out;
+}
+
+.modal {
+  position: fixed;
+  z-index: 51;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 20px 22px 22px;
+  border-radius: var(--radius);
+  background: var(--pop);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--line);
+  box-shadow: var(--pop-shadow);
+  animation: pop 0.2s ease-out;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 10px));
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--display-font);
+  font-size: 22px;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.close {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--field-line);
+  background: var(--field);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--sub);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input {
+  height: 42px;
+  min-width: 0;
+  padding: 0 14px;
+  border-radius: var(--radius-s);
+  background: var(--field);
+  border: 1px solid var(--field-line);
+  outline: none;
+  font-size: 14px;
+}
+.input:focus {
+  border-color: var(--accent-line);
+}
+
+.error {
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: var(--radius-xs);
+  background: oklch(0.65 0.18 25 / 0.15);
+  border: 1px solid oklch(0.65 0.18 25 / 0.45);
+}
+
+.hint {
+  margin: -4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--faint);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.primary,
+.secondary {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: var(--radius-s);
+  font-size: 14px;
+  font-weight: 600;
+  flex: none;
+}
+.primary {
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.primary:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.secondary {
+  font-weight: 500;
+  background: var(--field);
+  border: 1px solid var(--field-line);
+}
+.danger {
+  background: oklch(0.62 0.19 25);
+  color: #fff;
+}
+
+/* ---------- Share ---------- */
+.inviteRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.inviteRow .input {
+  flex: 1 1 200px;
+}
+
+.roleSelect {
+  height: 42px;
+  padding: 0 10px;
+  border-radius: var(--radius-s);
+  background: var(--field);
+  border: 1px solid var(--field-line);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.person .roleSelect {
+  height: 32px;
+}
+
+.people {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--field-line);
+  overflow: hidden;
+}
+.people:has(> .hint) {
+  border: 0;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  min-height: 52px;
+}
+.person + .person {
+  border-top: 1px solid var(--field-line);
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+}
+
+.email {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.you {
+  color: var(--faint);
+}
+
+.roleTag {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.02em;
+  color: var(--sub);
+  white-space: nowrap;
+}
+
+.removePerson {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 50%;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: var(--faint);
+}
+.removePerson:hover {
+  background: var(--field);
+  color: var(--ink);
+}

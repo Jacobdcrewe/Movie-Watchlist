@@ -2,7 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './Detail.module.css';
 
 /** Textarea that saves 500ms after typing stops, and flushes on unmount. */
-export function NotesField({ value, onSave }: { value: string; onSave: (v: string) => void }) {
+export function NotesField({
+  value,
+  onSave,
+  readOnly = false,
+}: {
+  value: string;
+  onSave: (v: string) => void;
+  readOnly?: boolean;
+}) {
   const [draft, setDraft] = useState(value);
   const pending = useRef<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
@@ -28,8 +36,9 @@ export function NotesField({ value, onSave }: { value: string; onSave: (v: strin
         id="notes"
         className={styles.notes}
         rows={3}
+        readOnly={readOnly}
         value={draft}
-        placeholder="Who recommended it, when to watch…"
+        placeholder={readOnly ? 'No notes' : 'Who recommended it, when to watch…'}
         onChange={(e) => {
           setDraft(e.target.value);
           pending.current = e.target.value;

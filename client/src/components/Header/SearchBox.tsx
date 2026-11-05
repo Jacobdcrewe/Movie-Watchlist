@@ -9,10 +9,12 @@ interface Props {
   inList: Set<number>;
   onAdd: (r: SearchResult) => void;
   showShortcut: boolean;
+  /** False on view-only lists. */
+  canAdd: boolean;
 }
 
 export const SearchBox = forwardRef<HTMLInputElement, Props>(function SearchBox(
-  { region, inList, onAdd, showShortcut },
+  { region, inList, onAdd, showShortcut, canAdd },
   ref,
 ) {
   const [query, setQuery] = useState('');
@@ -44,7 +46,7 @@ export const SearchBox = forwardRef<HTMLInputElement, Props>(function SearchBox(
               setQuery('');
               e.currentTarget.blur();
             }
-            if (e.key === 'Enter' && results[0] && settledQuery === q) onAdd(results[0]);
+            if (e.key === 'Enter' && canAdd && results[0] && settledQuery === q) onAdd(results[0]);
           }}
         />
         {loading && focused && <span className={styles.spinner} aria-label="Loading" />}
@@ -56,6 +58,7 @@ export const SearchBox = forwardRef<HTMLInputElement, Props>(function SearchBox(
           results={results}
           inList={inList}
           onAdd={onAdd}
+          canAdd={canAdd}
           error={error}
           emptyText={!loading && settledQuery === q && q && !results.length ? `No matches for “${q}”` : ''}
           regionName={REGIONS[region]}

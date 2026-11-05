@@ -12,6 +12,7 @@ export function MovieRow({
   onToggleWatched,
   onRemove,
   showRating,
+  readOnly,
 }: { entry: WatchlistEntry; showRating: boolean } & MovieActions) {
   const { movie, watched, rating } = entry;
   const stop = (fn: () => void) => (e: React.MouseEvent) => {
@@ -50,6 +51,7 @@ export function MovieRow({
           </span>
         </div>
       )}
+      {!readOnly && (
       <div className={styles.rowButtons}>
         <button
           type="button"
@@ -64,6 +66,7 @@ export function MovieRow({
           ×
         </button>
       </div>
+      )}
     </article>
   );
 }

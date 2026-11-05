@@ -74,7 +74,10 @@
   color: transparent;
   transition: background 0.15s, color 0.15s;
 }
-.tick:hover {
+.tick:disabled {
+  cursor: default;
+}
+.tick:hover:not(:disabled) {
   color: var(--faint);
 }
 .tickOn,

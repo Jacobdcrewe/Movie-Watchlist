@@ -66,6 +66,28 @@ export interface Settings {
   /** TMDB provider ids the user subscribes to. */
   myServices: number[];
   theme: Theme;
+  /** The list that was open last (null → first list). */
+  currentListId: string | null;
+}
+
+/** Your access to a list. */
+export type ListRole = 'owner' | 'editor' | 'viewer';
+
+/** A named watchlist you own or that's shared with you. */
+export interface WatchList {
+  id: string;
+  name: string;
+  ownerId: string;
+  role: ListRole;
+  /** True when other people have access (only known for lists you own). */
+  shared: boolean;
+}
+
+/** Someone with access to a list. */
+export interface ListPerson {
+  userId: string;
+  email: string;
+  role: ListRole;
 }
 
 export interface ApiError {

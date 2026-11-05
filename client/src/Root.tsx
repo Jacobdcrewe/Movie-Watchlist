@@ -11,13 +11,13 @@ const missing = [
 
 /** Gate: configuration check → sign-in → the app. */
 export default function Root() {
-  const { state, signIn, signOut } = useAuth();
+  const { state, signIn, signUp, signOut } = useAuth();
 
   if (missing.length) return <SetupScreen missing={missing} />;
   if (state.status === 'loading') return null;
-  if (state.status === 'signedOut') return <LoginScreen onSignIn={signIn} />;
+  if (state.status === 'signedOut') return <LoginScreen onSignIn={signIn} onSignUp={signUp} />;
 
   const { user } = state.session;
   // Keyed by user so all state resets if a different account signs in.
-  return <App key={user.id} userEmail={user.email ?? ''} onSignOut={signOut} />;
+  return <App key={user.id} userId={user.id} userEmail={user.email ?? ''} onSignOut={signOut} />;
 }

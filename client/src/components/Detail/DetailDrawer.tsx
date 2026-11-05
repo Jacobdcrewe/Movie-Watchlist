@@ -14,9 +14,10 @@ interface Props {
   onClose: () => void;
   onUpdate: (id: number, patch: WatchlistPatch) => void;
   onRemove: (id: number) => void;
+  readOnly: boolean;
 }
 
-export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate, onRemove }: Props) {
+export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate, onRemove, readOnly }: Props) {
   const { movie } = entry;
   const closeRef = useRef<HTMLButtonElement>(null);
   const hero = backdropUrl(movie.backdropPath) ?? posterUrl(movie.posterPath, 'w500');
@@ -60,13 +61,18 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
               <span className="mono-label">YOUR RATING</span>
               <span className={styles.critics}>Critics {movie.score || '—'}/10</span>
             </div>
-            <StarRating value={entry.rating} onChange={(rating) => onUpdate(movie.id, { rating })} />
+            <StarRating value={entry.rating} readOnly={readOnly} onChange={(rating) => onUpdate(movie.id, { rating })} />
           </div>
 
           <WhereToWatch availability={entry.availability} myServices={myServices} regionName={regionName} />
 
-          <NotesField key={movie.id} value={entry.note} onSave={(note) => onUpdate(movie.id, { note })} />
+          <NotesField key={movie.id} value={entry.note} readOnly={readOnly} onSave={(note) => onUpdate(movie.id, { note })} />
 
+          {readOnly ? (
+            <div className={styles.readOnlyNote}>
+              {entry.watched ? 'Watched · ' : ''}You have view-only access to this list.
+            </div>
+          ) : (
           <div className={styles.actions}>
             <button type="button" className={styles.primary} onClick={() => onUpdate(movie.id, { watched: !entry.watched })}>
               {entry.watched ? 'Mark as unwatched' : 'Mark as watched'}
@@ -75,6 +81,7 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
               Remove
             </button>
           </div>
+          )}
         </div>
       </aside>
     </>

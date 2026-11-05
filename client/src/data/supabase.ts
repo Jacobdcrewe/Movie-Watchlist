@@ -12,5 +12,5 @@ export const supabaseConfigured = Boolean(url && anonKey);
  * row-level security (see supabase/schema.sql), so it's safe in the bundle.
  */
 export const supabase: SupabaseClient = createClient(url || 'http://localhost', anonKey || 'missing', {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
 });

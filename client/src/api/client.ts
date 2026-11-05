@@ -1,6 +1,6 @@
 /**
- * The app's data API. Movie data comes straight from TMDB; your watchlist and
- * settings live in Supabase. Hooks only talk to this module.
+ * The app's data API. Movie data comes straight from TMDB; your lists, their
+ * items and your settings live in Supabase. Hooks only talk to this module.
  */
 import type { Region } from '../../../shared/types';
 import * as catalog from '../data/catalog';
@@ -15,9 +15,18 @@ export const api = {
   movie: catalog.details,
   providers: catalog.providers,
 
+  lists: repo.ensureLists,
+  createList: repo.createList,
+  renameList: repo.renameList,
+  deleteList: repo.deleteList,
+  leaveList: repo.leaveList,
+  people: repo.listPeople,
+  share: repo.shareList,
+  unshare: repo.unshareList,
+
   watchlist: repo.listWatchlist,
   add: repo.addToWatchlist,
-  update: (id: number, patch: Parameters<typeof repo.updateWatchlist>[1], _region?: Region) => repo.updateWatchlist(id, patch),
+  update: repo.updateWatchlist,
   remove: repo.removeFromWatchlist,
 
   settings: repo.getSettings,

@@ -30,9 +30,24 @@ export function useAuth() {
     if (error) throw new Error(error.message === 'Invalid login credentials' ? 'Wrong email or password.' : error.message);
   }, []);
 
+  /**
+   * Create an account. Returns true when Supabase wants the email confirmed
+   * first (the default); false when the user is signed in straight away.
+   */
+  const signUp = useCallback(async (email: string, password: string): Promise<boolean> => {
+    const { data, error } = await supabase.auth.signUp({
+      email: email.trim(),
+      password,
+      // The confirmation link brings them back to this site (local or GitHub Pages).
+      options: { emailRedirectTo: window.location.origin + import.meta.env.BASE_URL },
+    });
+    if (error) throw new Error(error.message);
+    return !data.session;
+  }, []);
+
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
   }, []);
 
-  return { state, signIn, signOut };
+  return { state, signIn, signUp, signOut };
 }

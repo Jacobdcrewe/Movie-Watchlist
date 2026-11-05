@@ -16,7 +16,7 @@ function initialTheme(): Settings['theme'] {
 
 /** Region, subscribed services and theme — persisted on the server. */
 export function useSettings(onError: (msg: string) => void) {
-  const [settings, setSettings] = useState<Settings>({ region: 'CA', myServices: [], theme: initialTheme() });
+  const [settings, setSettings] = useState<Settings>({ region: 'CA', myServices: [], theme: initialTheme(), currentListId: null });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

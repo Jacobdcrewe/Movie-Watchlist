@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { TABS, type SortKey, type Tab, type ViewMode } from '../../lib/watchlist';
 import { SegmentedControl } from './SegmentedControl';
 import { SizeSlider } from './SizeSlider';
@@ -5,6 +6,8 @@ import { SortSelect } from './SortSelect';
 import styles from './Toolbar.module.css';
 
 interface Props {
+  /** Page title (the list switcher). */
+  title: ReactNode;
   summary: string;
   tab: Tab;
   counts: Record<Tab, number>;
@@ -23,11 +26,11 @@ const VIEWS: { key: ViewMode; label: string }[] = [
   { key: 'text', label: 'Text' },
 ];
 
-export function Toolbar({ summary, tab, counts, onTab, sort, onSort, view, onView, scale, onScale }: Props) {
+export function Toolbar({ title, summary, tab, counts, onTab, sort, onSort, view, onView, scale, onScale }: Props) {
   return (
     <div className={styles.toolbar}>
       <div className={styles.titleBlock}>
-        <h1 className={styles.title}>Watchlist</h1>
+        {title}
         <div className={styles.summary}>{summary}</div>
       </div>
       <div className={styles.controls}>

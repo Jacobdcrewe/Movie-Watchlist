@@ -38,6 +38,32 @@
   letter-spacing: -0.02em;
 }
 
+.tabs {
+  display: flex;
+  padding: 4px;
+  gap: 2px;
+  border-radius: var(--radius-s);
+  background: var(--field);
+  border: 1px solid var(--field-line);
+}
+
+.tab {
+  flex: 1;
+  height: 34px;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sub);
+}
+
+.tabOn {
+  background: var(--seg);
+  box-shadow: var(--seg-shadow);
+  color: var(--ink);
+}
+
 .title {
   margin: 8px 0 0;
   font-family: var(--display-font);

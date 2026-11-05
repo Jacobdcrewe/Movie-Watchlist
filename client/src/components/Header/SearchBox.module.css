@@ -79,6 +79,10 @@
   border-radius: var(--radius-s);
   cursor: pointer;
 }
+.resultReadOnly {
+  cursor: default;
+}
+
 .result:hover {
   background: rgba(127, 127, 127, 0.12);
 }
