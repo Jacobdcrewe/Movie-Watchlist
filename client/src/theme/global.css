@@ -68,6 +68,43 @@ textarea::placeholder {
   color: var(--faint);
 }
 
+/* ---------- Scrollbars (page, dropdown, drawer, textarea) ---------- */
+/* Chromium / Safari: thin translucent pill floating on a transparent track. */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  min-height: 40px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--accent);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox (no ::-webkit-scrollbar support): standard properties. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb-hover) transparent;
+  }
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

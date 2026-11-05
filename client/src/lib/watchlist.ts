@@ -3,7 +3,7 @@ import { runtime } from './format';
 
 export type Tab = 'towatch' | 'watched' | 'all';
 export type SortKey = 'added' | 'rating' | 'runtime' | 'year' | 'title';
-export type ViewMode = 'grid' | 'list';
+export type ViewMode = 'grid' | 'list' | 'text';
 
 export const TABS: { key: Tab; label: string }[] = [
   { key: 'towatch', label: 'To watch' },

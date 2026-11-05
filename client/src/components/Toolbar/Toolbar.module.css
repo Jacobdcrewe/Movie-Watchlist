@@ -72,6 +72,75 @@
   border-radius: var(--radius-s);
 }
 
+/* ---------- Size slider ---------- */
+.size {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius-s);
+}
+
+.sizeIcon {
+  flex: none;
+  border-radius: 3px;
+  border: 1.5px solid currentColor;
+  opacity: 0.6;
+}
+
+.range {
+  --track: 4px;
+  --thumb: 16px;
+  width: 96px;
+  height: var(--thumb);
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.range:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: var(--track);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) var(--fill), var(--field-line) var(--fill));
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: calc((var(--track) - var(--thumb)) / 2);
+  border-radius: 50%;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), 0 0 0 3px var(--accent);
+}
+
+.range::-moz-range-track {
+  height: var(--track);
+  border-radius: 999px;
+  background: var(--field-line);
+}
+.range::-moz-range-progress {
+  height: var(--track);
+  border-radius: 999px;
+  background: var(--accent);
+}
+.range::-moz-range-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 50%;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), 0 0 0 3px var(--accent);
+}
+
 .select {
   background: none;
   border: 0;

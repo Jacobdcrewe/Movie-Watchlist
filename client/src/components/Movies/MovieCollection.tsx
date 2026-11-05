@@ -1,29 +1,42 @@
+import type { CSSProperties } from 'react';
 import type { WatchlistEntry } from '../../../../shared/types';
 import type { ViewMode } from '../../lib/watchlist';
 import { MovieCard } from './MovieCard';
 import { MovieRow } from './MovieRow';
+import { MovieTable } from './MovieTable';
 import type { MovieActions } from './types';
 import styles from './Movies.module.css';
 
 interface Props extends MovieActions {
   entries: WatchlistEntry[];
   view: ViewMode;
+  /** Size multiplier from the toolbar slider (1 = default). */
+  scale: number;
   wide: boolean;
 }
 
-/** Grid of poster cards or a list of rows. */
-export function MovieCollection({ entries, view, wide, ...actions }: Props) {
+const scaleVar = (scale: number) => ({ '--scale': scale }) as CSSProperties;
+
+/** Grid of poster cards, a list of rows, or a compact text table. */
+export function MovieCollection({ entries, view, scale, wide, ...actions }: Props) {
   if (view === 'grid') {
     return (
-      <div className={styles.grid}>
+      <div className={styles.grid} style={scaleVar(scale)}>
         {entries.map((e) => (
           <MovieCard key={e.movie.id} entry={e} {...actions} />
         ))}
       </div>
     );
   }
+  if (view === 'text') {
+    return (
+      <div style={scaleVar(scale)}>
+        <MovieTable entries={entries} {...actions} />
+      </div>
+    );
+  }
   return (
-    <div className={styles.list}>
+    <div className={styles.list} style={scaleVar(scale)}>
       {entries.map((e) => (
         <MovieRow key={e.movie.id} entry={e} showRating={wide} {...actions} />
       ))}
@@ -40,9 +53,9 @@ export function EmptyState({ title, body }: { title: string; body: string }) {
   );
 }
 
-export function LoadingGrid() {
+export function LoadingGrid({ scale }: { scale: number }) {
   return (
-    <div className={styles.grid} aria-busy>
+    <div className={styles.grid} style={scaleVar(scale)} aria-busy>
       {Array.from({ length: 8 }, (_, i) => (
         <div key={i} className={`glass ${styles.card} ${styles.skeleton}`}>
           <div className={styles.poster} />

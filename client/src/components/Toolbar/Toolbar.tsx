@@ -1,5 +1,6 @@
 import { TABS, type SortKey, type Tab, type ViewMode } from '../../lib/watchlist';
 import { SegmentedControl } from './SegmentedControl';
+import { SizeSlider } from './SizeSlider';
 import { SortSelect } from './SortSelect';
 import styles from './Toolbar.module.css';
 
@@ -12,14 +13,17 @@ interface Props {
   onSort: (s: SortKey) => void;
   view: ViewMode;
   onView: (v: ViewMode) => void;
+  scale: number;
+  onScale: (s: number) => void;
 }
 
 const VIEWS: { key: ViewMode; label: string }[] = [
   { key: 'grid', label: 'Grid' },
   { key: 'list', label: 'List' },
+  { key: 'text', label: 'Text' },
 ];
 
-export function Toolbar({ summary, tab, counts, onTab, sort, onSort, view, onView }: Props) {
+export function Toolbar({ summary, tab, counts, onTab, sort, onSort, view, onView, scale, onScale }: Props) {
   return (
     <div className={styles.toolbar}>
       <div className={styles.titleBlock}>
@@ -35,6 +39,7 @@ export function Toolbar({ summary, tab, counts, onTab, sort, onSort, view, onVie
         />
         <SortSelect value={sort} onChange={onSort} />
         <SegmentedControl label="View" segments={VIEWS} value={view} onChange={onView} />
+        <SizeSlider value={scale} onChange={onScale} />
       </div>
     </div>
   );

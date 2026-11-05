@@ -4,9 +4,9 @@ import styles from './Movies.module.css';
 
 export function ServiceBadge({ provider, mine }: { provider: Provider; mine: boolean }) {
   return (
-    <span className={`${styles.badge} ${mine ? styles.badgeMine : ''}`} title={mine ? 'On your services' : undefined}>
+    <span className={`${styles.badge} ${mine ? styles.badgeMine : ''}`} title={mine ? `${provider.name} · on your services` : provider.name}>
       <span className={styles.badgeDot} style={{ background: serviceColor(provider.name, provider.id) }} />
-      {provider.name}
+      <span className={styles.badgeText}>{provider.name}</span>
     </span>
   );
 }
@@ -17,8 +17,10 @@ export function TransactBadge({ kind, providers }: { kind: 'RENT' | 'BUY'; provi
   return (
     <span className={styles.dashed} title={providers.map((p) => p.name).join(', ')}>
       <span className={styles.dashedKind}>{kind}</span>
-      {providers[0].name}
-      {extra}
+      <span className={styles.badgeText}>
+        {providers[0].name}
+        {extra}
+      </span>
     </span>
   );
 }
