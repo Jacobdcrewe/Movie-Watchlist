@@ -1,0 +1,142 @@
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius-s);
+  background: var(--field);
+  border: 1px solid var(--field-line);
+}
+
+.icon {
+  opacity: 0.6;
+  flex: none;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  font-size: 14px;
+}
+
+.kbd {
+  font: 500 11px var(--mono);
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--field-line);
+  color: var(--faint);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+  border: 1.6px solid var(--field-line);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+  padding: 6px;
+  border-radius: var(--radius);
+  background: var(--pop);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--line);
+  box-shadow: var(--pop-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 30;
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+}
+
+.heading {
+  padding: 8px 10px 4px;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+}
+.result:hover {
+  background: rgba(127, 127, 127, 0.12);
+}
+
+.thumb {
+  width: 34px;
+  height: 51px;
+  border-radius: 6px;
+  flex: none;
+}
+
+.resultText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resultTitle,
+.resultAvail {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultTitle {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.resultYear {
+  color: var(--sub);
+  font-weight: 400;
+}
+
+.resultAvail {
+  font-size: 12px;
+  color: var(--sub);
+}
+
+.addBtn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 999px;
+  flex: none;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.added {
+  background: transparent;
+  color: var(--sub);
+}
+
+.message {
+  padding: 14px;
+  font-size: 13px;
+  color: var(--sub);
+}

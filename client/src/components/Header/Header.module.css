@@ -1,0 +1,95 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: var(--head-pad);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 10px 10px 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--logo);
+}
+
+.name {
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+.search {
+  position: relative;
+  flex: 1 1 300px;
+  min-width: 0;
+  max-width: var(--search-max);
+  margin: 0 auto;
+  order: var(--search-order);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  order: 2;
+  margin-left: auto;
+}
+
+/* Shared "field" look used by the region select and theme toggle */
+.field {
+  height: 42px;
+  border-radius: var(--radius-s);
+  background: var(--field);
+  border: 1px solid var(--field-line);
+}
+
+.region {
+  composes: field;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px 0 12px;
+}
+
+.select {
+  background: none;
+  border: 0;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.themeBtn {
+  composes: field;
+  width: 42px;
+  display: grid;
+  place-items: center;
+}
+
+.themeIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.6px solid currentColor;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}

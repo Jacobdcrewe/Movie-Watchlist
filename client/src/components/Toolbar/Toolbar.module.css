@@ -1,0 +1,83 @@
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--display-font);
+  font-size: var(--h1);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1;
+}
+
+.summary {
+  font-size: 14px;
+  color: var(--sub);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.segmented {
+  display: flex;
+  padding: 4px;
+  gap: 2px;
+  border-radius: var(--radius-s);
+}
+
+.segment {
+  border: 0;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  background: transparent;
+  transition: background 0.15s;
+}
+
+.active {
+  background: var(--seg);
+  box-shadow: var(--seg-shadow);
+}
+
+.count {
+  font: 500 11px var(--mono);
+  color: var(--faint);
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 42px;
+  padding: 0 6px 0 12px;
+  border-radius: var(--radius-s);
+}
+
+.select {
+  background: none;
+  border: 0;
+  outline: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px;
+}

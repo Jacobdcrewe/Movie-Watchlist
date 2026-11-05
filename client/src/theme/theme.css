@@ -1,0 +1,108 @@
+/*
+ * Design tokens — the "Frosted" direction from the Reel design.
+ * Dark is the default; light applies with <html data-theme="light">.
+ */
+:root {
+  --hue: 280;
+
+  --radius: 22px;
+  --radius-s: 13px;
+  --radius-xs: 9px;
+  --blur: blur(24px) saturate(170%);
+  --display-font: Geist, system-ui, sans-serif;
+  --display-weight: 600;
+  --display-tracking: -0.035em;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+
+  /* dark */
+  --base: #0a0b0f;
+  --ink: #eef0f4;
+  --sub: rgba(238, 240, 244, 0.66);
+  --faint: rgba(238, 240, 244, 0.52);
+  --glass: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.12);
+  --inset: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --shadow: var(--inset), 0 10px 40px rgba(0, 0, 0, 0.3);
+  --pop-shadow: var(--inset), 0 24px 70px rgba(0, 0, 0, 0.55);
+  --field: rgba(0, 0, 0, 0.22);
+  --field-line: rgba(255, 255, 255, 0.11);
+  --seg: rgba(255, 255, 255, 0.14);
+  --seg-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --pop: rgba(20, 22, 30, 0.78);
+  --accent: oklch(0.8 0.13 var(--hue));
+  --on-accent: #0b0c10;
+  --accent-soft: oklch(0.7 0.14 var(--hue) / 0.2);
+  --accent-line: oklch(0.7 0.14 var(--hue) / 0.6);
+  --scrim: rgba(0, 0, 0, 0.45);
+  --blob-1: oklch(0.55 0.16 280);
+  --blob-2: oklch(0.6 0.14 200);
+  --blob-3: oklch(0.6 0.15 340);
+  --blob-opacity: 0.5;
+  --hero-fade: linear-gradient(180deg, transparent 35%, rgba(20, 22, 30, 0.95));
+  --logo: conic-gradient(
+    from 200deg,
+    oklch(0.75 0.14 280),
+    oklch(0.8 0.12 0),
+    oklch(0.75 0.14 80),
+    oklch(0.75 0.14 280)
+  );
+
+  /* layout (wide) */
+  --head-pad: 16px clamp(16px, 4vw, 48px);
+  --main-pad: 16px clamp(16px, 4vw, 48px) 80px;
+  --gap: 24px;
+  --h1: clamp(40px, 4.5vw, 56px);
+  --grid-min: 190px;
+  --grid-gap: 20px;
+  --card-pad: 10px 10px 14px;
+  --card-btn: 30px;
+  --thumb-w: 72px;
+  --row-pad-r: 16px;
+  --search-max: 560px;
+  --search-order: 1;
+
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --base: #e8eaf0;
+  --ink: #14161c;
+  --sub: rgba(20, 22, 28, 0.66);
+  --faint: rgba(20, 22, 28, 0.52);
+  --glass: rgba(255, 255, 255, 0.5);
+  --line: rgba(255, 255, 255, 0.8);
+  --inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow: var(--inset), 0 10px 30px rgba(40, 45, 80, 0.1);
+  --pop-shadow: var(--inset), 0 24px 60px rgba(40, 45, 80, 0.22);
+  --field: rgba(255, 255, 255, 0.6);
+  --field-line: rgba(20, 22, 28, 0.1);
+  --seg: #fff;
+  --seg-shadow: 0 1px 3px rgba(20, 22, 28, 0.12);
+  --pop: rgba(250, 250, 253, 0.82);
+  --accent: oklch(0.5 0.16 var(--hue));
+  --on-accent: #fff;
+  --scrim: rgba(20, 22, 28, 0.18);
+  --blob-1: oklch(0.82 0.1 280);
+  --blob-2: oklch(0.85 0.09 200);
+  --blob-3: oklch(0.85 0.09 340);
+  --blob-opacity: 0.8;
+  --hero-fade: linear-gradient(180deg, transparent 35%, rgba(250, 250, 253, 0.95));
+  color-scheme: light;
+}
+
+@media (max-width: 719.98px) {
+  :root {
+    --head-pad: 10px 12px;
+    --main-pad: 8px 14px 60px;
+    --gap: 18px;
+    --h1: 34px;
+    --grid-min: 150px;
+    --grid-gap: 12px;
+    --card-pad: 8px 8px 12px;
+    --card-btn: 36px;
+    --thumb-w: 64px;
+    --row-pad-r: 10px;
+    --search-max: 100%;
+    --search-order: 3;
+  }
+}

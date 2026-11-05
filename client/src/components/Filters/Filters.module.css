@@ -1,0 +1,108 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px 14px;
+  flex-wrap: wrap;
+}
+
+.rowLabel {
+  width: 88px;
+  flex: none;
+}
+
+.divider {
+  height: 1px;
+  background: var(--field-line);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.services {
+  flex: 1 1 300px;
+}
+
+.chip {
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--field-line);
+  background: transparent;
+  color: var(--sub);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.serviceOn {
+  background: var(--seg);
+  border-color: var(--accent-line);
+  color: var(--ink);
+}
+
+.genreOn {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--on-accent);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.toggle {
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px;
+  border: 0;
+  background: none;
+}
+
+.track {
+  width: 40px;
+  height: 24px;
+  border-radius: 999px;
+  padding: 3px;
+  display: flex;
+  justify-content: flex-start;
+  background: var(--field);
+  border: 1px solid var(--field-line);
+  transition: background 0.2s;
+}
+
+.trackOn {
+  justify-content: flex-end;
+  background: var(--accent);
+}
+
+.knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}

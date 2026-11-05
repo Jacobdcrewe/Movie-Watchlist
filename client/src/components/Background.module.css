@@ -1,0 +1,41 @@
+.root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: var(--blob-opacity);
+  transition: background 0.3s, opacity 0.3s;
+}
+
+.one {
+  width: 620px;
+  height: 620px;
+  left: -140px;
+  top: -180px;
+  background: var(--blob-1);
+  filter: blur(140px);
+}
+
+.two {
+  width: 520px;
+  height: 520px;
+  right: -120px;
+  top: 120px;
+  background: var(--blob-2);
+  filter: blur(150px);
+}
+
+.three {
+  width: 560px;
+  height: 560px;
+  left: 30%;
+  bottom: -260px;
+  background: var(--blob-3);
+  filter: blur(160px);
+}
