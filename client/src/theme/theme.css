@@ -64,7 +64,7 @@
   );
   --glow-1: oklch(0.45 0.14 265);
   --glow-2: oklch(0.42 0.14 320);
-  --blob-opacity: 0.38;
+  --blob-opacity: 0.65; /* mesh + glows: lower = darker */
   /* Rainbow rim used by the glass edge (see global.css). */
   --iridescent: conic-gradient(
     from 210deg,
