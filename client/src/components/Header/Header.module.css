@@ -13,6 +13,12 @@
   padding: 10px 10px 10px 18px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  transition: background 0.2s;
+}
+
+/* Two classes, so this beats the global .glass background. */
+.bar.solid {
+  background: var(--bar-solid);
 }
 
 .brand {

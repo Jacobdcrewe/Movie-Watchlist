@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Region, Theme } from '../../../../shared/types';
+import { useScrolled } from '../../hooks/useScrolled';
 import { RegionSelect } from './RegionSelect';
 import { ThemeToggle } from './ThemeToggle';
 import styles from './Header.module.css';
@@ -15,9 +16,11 @@ interface Props {
 }
 
 export function Header({ search, region, onRegion, theme, onToggleTheme, userEmail, onSignOut }: Props) {
+  // Light glass at the top of the page; near-solid once content scrolls underneath.
+  const scrolled = useScrolled();
   return (
     <header className={styles.header}>
-      <div className={`glass ${styles.bar}`}>
+      <div className={`glass ${styles.bar} ${scrolled ? styles.solid : ''}`}>
         <div className={styles.brand}>
           <div className={styles.logo} />
           <span className={styles.name}>Reel</span>
