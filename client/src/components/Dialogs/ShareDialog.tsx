@@ -1,4 +1,5 @@
-import { X } from 'lucide-react';
+import { Eye, Pencil, X } from 'lucide-react';
+import { Dropdown } from '../ui/Dropdown';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import type { ListPerson, WatchList } from '../../../../shared/types';
 import { api } from '../../api/client';
@@ -8,6 +9,12 @@ import styles from './Dialogs.module.css';
 type MemberRole = 'editor' | 'viewer';
 
 const ROLE_LABEL: Record<string, string> = { owner: 'Owner', editor: 'Can edit', viewer: 'Can view' };
+
+const ROLE_ICON = { size: 15, strokeWidth: 2, 'aria-hidden': true } as const;
+const ROLE_OPTIONS = [
+  { value: 'editor' as const, label: 'Can edit', icon: <Pencil {...ROLE_ICON} /> },
+  { value: 'viewer' as const, label: 'Can view', icon: <Eye {...ROLE_ICON} /> },
+];
 
 interface Props {
   list: WatchList;
@@ -71,15 +78,7 @@ export function ShareDialog({ list, myId, onClose, onChanged }: Props) {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <select
-              className={styles.roleSelect}
-              value={role}
-              aria-label="Access"
-              onChange={(e) => setRole(e.target.value as MemberRole)}
-            >
-              <option value="editor">Can edit</option>
-              <option value="viewer">Can view</option>
-            </select>
+            <Dropdown label="Access" value={role} options={ROLE_OPTIONS} onChange={setRole} />
             <button type="submit" className={styles.primary} disabled={busy || !email.trim()}>
               Share
             </button>
@@ -108,16 +107,15 @@ export function ShareDialog({ list, myId, onClose, onChanged }: Props) {
                 </span>
                 {isOwner && p.role !== 'owner' ? (
                   <>
-                    <select
-                      className={styles.roleSelect}
-                      value={p.role}
+                    <Dropdown
+                      label={`Access for ${p.email}`}
+                      size="sm"
+                      alignRight
                       disabled={busy}
-                      aria-label={`Access for ${p.email}`}
-                      onChange={(e) => run(() => api.share(list.id, p.email, e.target.value as MemberRole))}
-                    >
-                      <option value="editor">Can edit</option>
-                      <option value="viewer">Can view</option>
-                    </select>
+                      value={p.role as MemberRole}
+                      options={ROLE_OPTIONS}
+                      onChange={(r) => r !== p.role && run(() => api.share(list.id, p.email, r))}
+                    />
                     <button
                       type="button"
                       className={styles.removePerson}

@@ -23,6 +23,8 @@ export function Modal({ title, onClose, children, width = 420 }: Props) {
     first?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        // An open dropdown inside the dialog handles Esc itself (closes just the menu).
+        if ((e.target as HTMLElement | null)?.closest?.('[aria-expanded="true"]')) return;
         e.stopPropagation();
         close.current();
       }
@@ -37,7 +39,7 @@ export function Modal({ title, onClose, children, width = 420 }: Props) {
   return (
     <>
       <div className={styles.scrim} onClick={onClose} />
-      <div ref={panel} className={styles.modal} style={{ width }} role="dialog" aria-modal="true" aria-label={title}>
+      <div ref={panel} className={`prism-edge ${styles.modal}`} style={{ width }} role="dialog" aria-modal="true" aria-label={title}>
         <div className={styles.scroller}>
         <div className={styles.head}>
           <h2 className={styles.title}>{title}</h2>

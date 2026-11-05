@@ -8,7 +8,7 @@
   gap: 8px;
   height: 42px;
   padding: 0 12px;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-pill);
   background: var(--field);
   border: 1px solid var(--field-line);
   font-size: 14px;
@@ -20,6 +20,34 @@
 .triggerOpen {
   background: rgba(127, 127, 127, 0.16);
   border-color: var(--accent-line);
+}
+
+/* Toolbar look: same frosted pill as the tabs / view switcher / size slider. */
+.triggerGlass {
+  background: var(--glass);
+  border-color: var(--line);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  font-size: 13px;
+  gap: 6px;
+  padding: 0 10px 0 12px;
+}
+.triggerGlass:hover,
+.triggerGlass.triggerOpen {
+  background: var(--seg);
+  border-color: var(--accent-line);
+}
+
+/* Compact trigger for dense rows (e.g. people in the share dialog). */
+.sm {
+  height: 32px;
+  padding: 0 10px 0 12px;
+  font-size: 13px;
+  gap: 6px;
+}
+.trigger:disabled {
+  opacity: 0.55;
+  cursor: default;
 }
 
 .value {
@@ -38,12 +66,14 @@
   opacity: 1;
 }
 
+/* Portaled to <body>; top/left/min-width are set from the trigger's position. */
 .menu {
-  position: absolute;
-  z-index: 35;
-  top: calc(100% + 8px);
+  position: fixed;
+  z-index: 70;
+  top: 0;
   left: 0;
-  min-width: max(100%, 210px);
+  min-width: 210px;
+  max-width: calc(100vw - 16px);
   margin: 0;
   padding: 6px;
   list-style: none;
@@ -59,9 +89,15 @@
   outline: none;
   animation: drop 0.15s ease-out;
 }
-.right {
-  left: auto;
-  right: 0;
+.menu[data-placement='top'] {
+  animation-name: rise;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
 }
 
 @keyframes drop {
@@ -102,6 +138,18 @@
   background: var(--accent-soft);
   border-color: var(--accent-line);
   color: var(--ink);
+}
+
+.optionIcon {
+  flex: none;
+  width: 18px;
+  display: grid;
+  place-items: center;
+  color: var(--faint);
+}
+.selected .optionIcon,
+.active .optionIcon {
+  color: var(--accent);
 }
 
 .label {

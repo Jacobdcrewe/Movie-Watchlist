@@ -34,7 +34,7 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
   return (
     <>
       <div className={styles.scrim} onClick={onClose} />
-      <aside className={styles.drawer} role="dialog" aria-modal="true" aria-label={movie.title}>
+      <aside className={`prism-edge ${styles.drawer}`} role="dialog" aria-modal="true" aria-label={movie.title}>
         {/* Scroll inside the rounded panel so the scrollbar stays within its shape. */}
         <div className={styles.scroller}>
         <div className={styles.hero} style={{ background: placeholderArt(movie.id) }}>

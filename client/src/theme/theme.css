@@ -1,54 +1,87 @@
 /*
- * Design tokens — the "Frosted" direction from the Reel design.
+ * Design tokens — the "Prism" liquid-glass direction from the Reel design:
+ * thick specular edges, pill-shaped controls, an iridescent mesh, teal accent.
  * Dark is the default; light applies with <html data-theme="light">.
+ *
+ * Background colour scheme — the page behind the glass is built from:
+ *   --base           the solid page colour underneath everything
+ *   --mesh           the iridescent conic gradient (blurred heavily)
+ *   --glow-1/2       two soft coloured glows (top-left, bottom-right)
+ *   --blob-opacity   how strongly the mesh + glows show (lower = darker)
+ * Colours are oklch(lightness chroma hue): lower the first number to darken,
+ * lower the second to desaturate, and change the hue to recolour
+ * (≈ 190 teal · 230 blue · 265 indigo · 300 violet · 330 pink · 40–60 amber).
+ * The teal accent for buttons/checks is separate: --hue.
  */
 :root {
-  --hue: 280;
+  --hue: 190; /* teal */
 
-  --radius: 22px;
-  --radius-s: 13px;
-  --radius-xs: 9px;
-  --blur: blur(24px) saturate(170%);
+  --radius: 30px; /* panels, cards */
+  --radius-s: 18px; /* menus, inner boxes */
+  --radius-xs: 14px;
+  --radius-pill: 999px; /* every control */
+  --blur: blur(16px) saturate(220%);
   --display-font: Geist, system-ui, sans-serif;
-  --display-weight: 600;
-  --display-tracking: -0.035em;
+  --display-weight: 700;
+  --display-tracking: -0.05em;
   --mono: 'Geist Mono', ui-monospace, monospace;
 
   /* dark */
-  --base: #0a0b0f;
-  --ink: #eef0f4;
-  --sub: rgba(238, 240, 244, 0.66);
-  --faint: rgba(238, 240, 244, 0.52);
-  --glass: rgba(255, 255, 255, 0.06);
-  --line: rgba(255, 255, 255, 0.12);
-  --inset: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --shadow: var(--inset), 0 10px 40px rgba(0, 0, 0, 0.3);
+  --base: #05060a;
+  --ink: #eef3f6;
+  --sub: rgba(238, 243, 246, 0.68);
+  --faint: rgba(238, 243, 246, 0.52);
+  --glass: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.18);
+  /* Thick specular highlight along the top, a faint lip at the bottom, and an inner glow. */
+  --inset: inset 0 1.5px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 24px rgba(255, 255, 255, 0.06);
+  --shadow: var(--inset), 0 12px 40px rgba(0, 0, 0, 0.32);
   --pop-shadow: var(--inset), 0 24px 70px rgba(0, 0, 0, 0.55);
-  --field: rgba(0, 0, 0, 0.22);
-  --field-line: rgba(255, 255, 255, 0.11);
-  --seg: rgba(255, 255, 255, 0.14);
-  --seg-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --pop: rgba(20, 22, 30, 0.98);
-  --bar-solid: rgba(20, 22, 30, 0.88);
-  --accent: oklch(0.8 0.13 var(--hue));
-  --on-accent: #0b0c10;
-  --accent-soft: oklch(0.7 0.14 var(--hue) / 0.2);
-  --accent-line: oklch(0.7 0.14 var(--hue) / 0.6);
+  --field: rgba(0, 0, 0, 0.24);
+  --field-line: rgba(255, 255, 255, 0.13);
+  --seg: rgba(255, 255, 255, 0.16);
+  --seg-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.28), 0 2px 8px rgba(0, 0, 0, 0.18);
+  --pop: rgb(14, 22, 28); /* popups are solid so text behind never shows through */
+  --bar-solid: rgba(14, 22, 28, 0.88);
+  --accent: oklch(0.82 0.12 var(--hue));
+  --on-accent: #041013;
+  --accent-soft: oklch(0.72 0.12 var(--hue) / 0.22);
+  --accent-line: oklch(0.75 0.12 var(--hue) / 0.65);
   --scrim: rgba(0, 0, 0, 0.45);
   --danger: oklch(0.62 0.19 25);
-  --scroll-thumb: rgba(238, 240, 244, 0.16);
-  --scroll-thumb-hover: rgba(238, 240, 244, 0.32);
-  --blob-1: oklch(0.55 0.16 280);
-  --blob-2: oklch(0.6 0.14 200);
-  --blob-3: oklch(0.6 0.15 340);
-  --blob-opacity: 0.5;
-  --hero-fade: linear-gradient(180deg, transparent 35%, rgba(20, 22, 30, 0.95));
+  --scroll-thumb: rgba(238, 243, 246, 0.16);
+  --scroll-thumb-hover: rgba(238, 243, 246, 0.32);
+  /* Iridescent mesh behind everything. */
+  --mesh: conic-gradient(
+    from 90deg at 30% 40%,
+    oklch(0.38 0.12 250),
+    oklch(0.42 0.1 200),
+    oklch(0.38 0.14 270),
+    oklch(0.4 0.13 320),
+    oklch(0.42 0.1 40),
+    oklch(0.38 0.12 250)
+  );
+  --glow-1: oklch(0.45 0.14 265);
+  --glow-2: oklch(0.42 0.14 320);
+  --blob-opacity: 0.38;
+  /* Rainbow rim used by the glass edge (see global.css). */
+  --iridescent: conic-gradient(
+    from 210deg,
+    oklch(0.85 0.12 190 / 0.9),
+    oklch(0.8 0.12 260 / 0.75),
+    oklch(0.82 0.12 330 / 0.75),
+    oklch(0.88 0.1 70 / 0.75),
+    oklch(0.85 0.12 190 / 0.9)
+  );
+  --edge-opacity: 0.32; /* rim strength: raise for a bolder glass edge */
+  --hero-fade: linear-gradient(180deg, transparent 35%, rgba(14, 22, 28, 0.95));
   --logo: conic-gradient(
     from 200deg,
-    oklch(0.75 0.14 280),
-    oklch(0.8 0.12 0),
-    oklch(0.75 0.14 80),
-    oklch(0.75 0.14 280)
+    oklch(0.78 0.13 190),
+    oklch(0.75 0.14 270),
+    oklch(0.78 0.13 340),
+    oklch(0.78 0.13 190)
   );
 
   /* layout (wide) */
@@ -69,31 +102,50 @@
 }
 
 :root[data-theme='light'] {
-  --base: #e8eaf0;
-  --ink: #14161c;
-  --sub: rgba(20, 22, 28, 0.66);
-  --faint: rgba(20, 22, 28, 0.52);
-  --glass: rgba(255, 255, 255, 0.5);
-  --line: rgba(255, 255, 255, 0.8);
-  --inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --shadow: var(--inset), 0 10px 30px rgba(40, 45, 80, 0.1);
-  --pop-shadow: var(--inset), 0 24px 60px rgba(40, 45, 80, 0.22);
+  --base: #e6eef2;
+  --ink: #10171c;
+  --sub: rgba(16, 23, 28, 0.66);
+  --faint: rgba(16, 23, 28, 0.52);
+  --glass: rgba(255, 255, 255, 0.38);
+  --line: rgba(255, 255, 255, 0.95);
+  --inset: inset 0 1.5px 0 #fff, inset 0 -1px 0 rgba(255, 255, 255, 0.6), inset 0 0 24px rgba(255, 255, 255, 0.55);
+  --shadow: var(--inset), 0 12px 30px rgba(30, 60, 80, 0.12);
+  --pop-shadow: var(--inset), 0 24px 60px rgba(30, 60, 80, 0.24);
   --field: rgba(255, 255, 255, 0.6);
-  --field-line: rgba(20, 22, 28, 0.1);
+  --field-line: rgba(16, 23, 28, 0.1);
   --seg: #fff;
-  --seg-shadow: 0 1px 3px rgba(20, 22, 28, 0.12);
-  --pop: rgba(250, 250, 253, 0.95);
-  --bar-solid: rgba(250, 250, 253, 0.9);
-  --accent: oklch(0.5 0.16 var(--hue));
+  --seg-shadow: inset 0 1px 0 #fff, 0 1px 4px rgba(16, 23, 28, 0.14);
+  --pop: rgb(248, 252, 253);
+  --bar-solid: rgba(248, 252, 253, 0.9);
+  --accent: oklch(0.55 0.11 var(--hue));
   --on-accent: #fff;
-  --scrim: rgba(20, 22, 28, 0.18);
-  --scroll-thumb: rgba(20, 22, 28, 0.18);
-  --scroll-thumb-hover: rgba(20, 22, 28, 0.34);
-  --blob-1: oklch(0.82 0.1 280);
-  --blob-2: oklch(0.85 0.09 200);
-  --blob-3: oklch(0.85 0.09 340);
+  --accent-soft: oklch(0.6 0.11 var(--hue) / 0.16);
+  --accent-line: oklch(0.55 0.11 var(--hue) / 0.55);
+  --scrim: rgba(16, 23, 28, 0.18);
+  --scroll-thumb: rgba(16, 23, 28, 0.18);
+  --scroll-thumb-hover: rgba(16, 23, 28, 0.34);
+  --mesh: conic-gradient(
+    from 90deg at 30% 40%,
+    oklch(0.84 0.07 250),
+    oklch(0.86 0.06 210),
+    oklch(0.82 0.08 270),
+    oklch(0.86 0.07 330),
+    oklch(0.9 0.06 70),
+    oklch(0.84 0.07 250)
+  );
+  --glow-1: oklch(0.86 0.08 255);
+  --glow-2: oklch(0.86 0.09 290);
   --blob-opacity: 0.8;
-  --hero-fade: linear-gradient(180deg, transparent 35%, rgba(250, 250, 253, 0.95));
+  --iridescent: conic-gradient(
+    from 210deg,
+    oklch(0.7 0.12 190 / 0.7),
+    oklch(0.7 0.12 260 / 0.55),
+    oklch(0.72 0.12 330 / 0.55),
+    oklch(0.8 0.1 70 / 0.55),
+    oklch(0.7 0.12 190 / 0.7)
+  );
+  --edge-opacity: 0.36;
+  --hero-fade: linear-gradient(180deg, transparent 35%, rgba(248, 252, 253, 0.95));
   color-scheme: light;
 }
 

@@ -1,0 +1,210 @@
+.root {
+  position: relative;
+  flex: none;
+}
+
+/* ---------- Trigger pill ---------- */
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 10px 0 5px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--field-line);
+  background: var(--field);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+.trigger:hover,
+.triggerOpen {
+  background: var(--seg);
+  border-color: var(--accent-line);
+}
+
+/* Overlapping logos, like avatar stacks. */
+.stack {
+  display: flex;
+  align-items: center;
+}
+.stackItem {
+  display: grid;
+  border-radius: 7px;
+  box-shadow: 0 0 0 2px var(--base);
+}
+.stackItem + .stackItem {
+  margin-left: -7px;
+}
+.stackEmpty {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px dashed var(--field-line);
+  color: var(--faint);
+}
+
+.label {
+  padding-left: 2px;
+}
+
+.count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  font: 500 11px var(--mono);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.chevron {
+  opacity: 0.6;
+  transition: transform 0.2s, opacity 0.15s;
+}
+.triggerOpen .chevron {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ---------- Popover ---------- */
+.pop {
+  position: absolute;
+  z-index: 35;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 300px;
+  max-height: min(70vh, 520px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-s);
+  background: var(--pop);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--line);
+  box-shadow: var(--pop-shadow);
+  animation: drop 0.15s ease-out;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 8px;
+}
+.title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 4px 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px 8px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.12s, border-color 0.12s;
+}
+.row:hover {
+  background: rgba(127, 127, 127, 0.12);
+}
+.row:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: -2px;
+}
+.rowOn {
+  background: var(--seg);
+  border-color: var(--field-line);
+  box-shadow: var(--seg-shadow);
+}
+.rowOn:hover {
+  background: var(--seg);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.check {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--field-line);
+  transition: background 0.15s, border-color 0.15s;
+}
+.checkOn {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--on-accent);
+}
+
+.empty {
+  padding: 12px 8px;
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.done {
+  margin: 8px;
+  height: 42px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.45);
+}
+.done:hover {
+  filter: brightness(1.08);
+}
+
+@media (max-width: 719.98px) {
+  /* Pin the popover across the bar's width (the bar is the positioning context). */
+  .root {
+    position: static;
+  }
+  .pop {
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+}

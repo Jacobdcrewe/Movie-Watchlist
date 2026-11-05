@@ -83,7 +83,7 @@ export function ListSwitcher({ lists, current, onSelect, onNew, onRename, onShar
       </div>
 
       {open && (
-        <div className={styles.menu}>
+        <div className={`prism-edge ${styles.menu}`}>
           <div className={styles.menuScroll} role="menu">
           {owned.length > 0 && <div className={`mono-label ${styles.section}`}>YOUR LISTS</div>}
           {owned.map(item)}

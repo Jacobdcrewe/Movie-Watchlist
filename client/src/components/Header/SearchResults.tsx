@@ -29,7 +29,7 @@ export function availabilitySummary(r: SearchResult, regionName: string) {
 
 export function SearchResults({ heading, results, inList, onAdd, canAdd, error, emptyText, regionName }: Props) {
   return (
-    <div className={styles.dropdown}>
+    <div className={`prism-edge ${styles.dropdown}`}>
       <div className={styles.dropdownScroll} role="listbox">
       {heading && !error && <div className={`mono-label ${styles.heading}`}>{heading}</div>}
       {results.map((r) => {

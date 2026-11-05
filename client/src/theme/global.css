@@ -69,10 +69,36 @@ textarea::placeholder {
 
 /* Reusable glass surface */
 .glass {
+  position: relative;
+  isolation: isolate;
   background: var(--glass);
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
   border: 1px solid var(--line);
+}
+
+/*
+ * Prism liquid-glass rim: a thin iridescent ring over the border, brightest along
+ * the top like a specular highlight. Masked so only the ring paints.
+ */
+.glass::before,
+.prism-edge::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 40%), var(--iridescent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: var(--edge-opacity);
+  pointer-events: none;
+}
+.prism-edge {
+  isolation: isolate;
 }
 
 .mono-label {

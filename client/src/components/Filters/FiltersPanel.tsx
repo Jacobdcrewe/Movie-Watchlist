@@ -1,6 +1,7 @@
-import { ServiceLogo } from '../ui/ServiceLogo';
+import { MonitorPlay } from 'lucide-react';
 import type { Provider } from '../../../../shared/types';
-import { Toggle } from './Toggle';
+import { ScrollRow } from '../ui/ScrollRow';
+import { ServicesMenu } from './ServicesMenu';
 import styles from './Filters.module.css';
 
 interface Props {
@@ -12,50 +13,51 @@ interface Props {
   genres: string[];
   genre: string;
   onGenre: (g: string) => void;
+  regionName: string;
 }
 
+/**
+ * Compact filter bar. Desktop: [My services ▾] [Streamable] | genres… on one line.
+ * Mobile: services + Streamable on top, the genre scroller below.
+ */
 export function FiltersPanel(p: Props) {
   return (
-    <section className={`glass ${styles.panel}`} aria-label="Filters">
-      <div className={styles.row}>
-        <span className={`mono-label ${styles.rowLabel}`}>MY SERVICES</span>
-        <div className={`${styles.chips} ${styles.services}`}>
-          {p.services.length === 0 && <span className={styles.hint}>Loading services…</span>}
-          {p.services.map((s) => {
-            const on = p.myServices.includes(s.id);
-            return (
-              <button
-                key={s.id}
-                type="button"
-                aria-pressed={on}
-                className={`${styles.chip} ${on ? styles.serviceOn : ''}`}
-                onClick={() => p.onToggleService(s.id)}
-              >
-                <ServiceLogo provider={s} size={18} />
-                {s.name}
-              </button>
-            );
-          })}
-        </div>
-        <Toggle label="Only on my services" checked={p.onlyMine} onChange={p.onOnlyMine} />
+    <section className={`glass ${styles.bar}`} aria-label="Filters">
+      <div className={styles.lead}>
+        <ServicesMenu
+          services={p.services}
+          myServices={p.myServices}
+          onToggle={p.onToggleService}
+          regionName={p.regionName}
+        />
+        <button
+          type="button"
+          aria-pressed={p.onlyMine}
+          className={`${styles.chip} ${styles.streamable} ${p.onlyMine ? styles.on : ''}`}
+          title="Only show movies on your services"
+          onClick={() => p.onOnlyMine(!p.onlyMine)}
+        >
+          <MonitorPlay size={15} strokeWidth={2} aria-hidden />
+          Streamable
+        </button>
       </div>
-      <div className={styles.divider} />
-      <div className={styles.row}>
-        <span className={`mono-label ${styles.rowLabel}`}>GENRE</span>
-        <div className={styles.chips} style={{ flex: 1 }}>
-          {p.genres.map((g) => (
-            <button
-              key={g}
-              type="button"
-              aria-pressed={g === p.genre}
-              className={`${styles.chip} ${g === p.genre ? styles.genreOn : ''}`}
-              onClick={() => p.onGenre(g)}
-            >
-              {g}
-            </button>
-          ))}
-        </div>
-      </div>
+
+      <span className={styles.divider} aria-hidden />
+
+      <ScrollRow ariaLabel="Genres" selectedKey={p.genre} className={styles.genres}>
+        {p.genres.map((g) => (
+          <button
+            key={g}
+            type="button"
+            data-key={g}
+            aria-pressed={g === p.genre}
+            className={`${styles.chip} ${g === p.genre ? styles.on : ''}`}
+            onClick={() => p.onGenre(g)}
+          >
+            {g}
+          </button>
+        ))}
+      </ScrollRow>
     </section>
   );
 }

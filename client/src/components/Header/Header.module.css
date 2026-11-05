@@ -16,6 +16,13 @@
   transition: background 0.2s;
 }
 
+@media (min-width: 720px) {
+  .bar {
+    border-radius: var(--radius-pill);
+    padding-left: 22px;
+  }
+}
+
 /* Two classes, so this beats the global .glass background. */
 .bar.solid {
   background: var(--bar-solid);
@@ -62,7 +69,7 @@
 /* Shared "field" look used by the region select and theme toggle */
 .field {
   height: 42px;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-pill);
   background: var(--field);
   border: 1px solid var(--field-line);
 }

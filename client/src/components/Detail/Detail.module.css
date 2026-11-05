@@ -356,7 +356,7 @@
   flex: 1;
   height: 46px;
   border: 0;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-pill);
   font-size: 14px;
   font-weight: 600;
   background: var(--accent);
@@ -366,7 +366,7 @@
 .secondary {
   height: 46px;
   padding: 0 18px;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-pill);
   font-size: 14px;
   font-weight: 500;
   background: var(--field);

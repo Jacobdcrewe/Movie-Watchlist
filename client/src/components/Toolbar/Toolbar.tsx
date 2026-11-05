@@ -37,13 +37,14 @@ export function Toolbar({ title, summary, tab, counts, onTab, sort, onSort, view
       </div>
       <div className={styles.controls}>
         <SegmentedControl
+          className={styles.tabs}
           label="Filter by status"
           segments={TABS.map((t) => ({ ...t, count: counts[t.key] }))}
           value={tab}
           onChange={onTab}
         />
         <SortSelect value={sort} onChange={onSort} />
-        <SegmentedControl label="View" segments={VIEWS} value={view} onChange={onView} />
+        <SegmentedControl label="View" segments={VIEWS} value={view} onChange={onView} iconOnlyNarrow />
         <SizeSlider value={scale} onChange={onScale} />
       </div>
     </div>

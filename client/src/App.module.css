@@ -31,7 +31,7 @@
   transform: translateX(-50%);
   max-width: min(520px, calc(100vw - 32px));
   padding: 12px 16px;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-pill);
   background: var(--pop);
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);

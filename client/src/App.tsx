@@ -157,6 +157,7 @@ export default function App({ userId, userEmail, onSignOut }: Props) {
           genres={genres}
           genre={genre}
           onGenre={setGenre}
+          regionName={regionName}
         />
 
         {busy ? (
@@ -237,7 +238,7 @@ export default function App({ userId, userEmail, onSignOut }: Props) {
       )}
 
       {toast.message && (
-        <div className={styles.toast} role="alert" onClick={toast.dismiss}>
+        <div className={`prism-edge ${styles.toast}`} role="alert" onClick={toast.dismiss}>
           {toast.message}
         </div>
       )}

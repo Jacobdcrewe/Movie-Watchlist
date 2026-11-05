@@ -1,0 +1,77 @@
+.root {
+  position: relative;
+  min-width: 0;
+}
+
+.track {
+  --fade: 28px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: 24px;
+  /* Room so focus rings aren't clipped by the scroll box. */
+  padding: 3px 2px;
+  margin: -3px -2px;
+  scrollbar-width: none;
+}
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track > * {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* Fade chips out at whichever edge has more to scroll to. */
+.track[data-fade='end'] {
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--fade)), transparent);
+}
+.track[data-fade='start'] {
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade));
+}
+.track[data-fade='both'] {
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+}
+
+/* Arrow buttons: mouse devices only, shown when hovering or focused within the row. */
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--pop);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.left {
+  left: -6px;
+}
+.right {
+  right: -6px;
+}
+.arrow:hover {
+  transform: scale(1.08);
+}
+
+@media (hover: hover) {
+  .arrow {
+    display: grid;
+  }
+  .root:hover .arrow,
+  .root:focus-within .arrow {
+    opacity: 1;
+  }
+}
