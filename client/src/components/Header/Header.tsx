@@ -10,9 +10,11 @@ interface Props {
   onRegion: (r: Region) => void;
   theme: Theme;
   onToggleTheme: () => void;
+  userEmail: string;
+  onSignOut: () => void;
 }
 
-export function Header({ search, region, onRegion, theme, onToggleTheme }: Props) {
+export function Header({ search, region, onRegion, theme, onToggleTheme, userEmail, onSignOut }: Props) {
   return (
     <header className={styles.header}>
       <div className={`glass ${styles.bar}`}>
@@ -24,6 +26,18 @@ export function Header({ search, region, onRegion, theme, onToggleTheme }: Props
         <div className={styles.actions}>
           <RegionSelect value={region} onChange={onRegion} />
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          <button
+            type="button"
+            className={styles.themeBtn}
+            onClick={onSignOut}
+            title={userEmail ? `Signed in as ${userEmail} · Sign out` : 'Sign out'}
+            aria-label="Sign out"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2.5H3.5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1H6" />
+              <path d="M10 11l3-3-3-3M13 8H6" />
+            </svg>
+          </button>
         </div>
       </div>
     </header>

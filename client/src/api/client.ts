@@ -1,53 +1,25 @@
-import type {
-  Availability,
-  Movie,
-  Provider,
-  Region,
-  SearchResult,
-  Settings,
-  WatchlistEntry,
-  WatchlistPatch,
-} from '../../../shared/types';
+/**
+ * The app's data API. Movie data comes straight from TMDB; your watchlist and
+ * settings live in Supabase. Hooks only talk to this module.
+ */
+import type { Region } from '../../../shared/types';
+import * as catalog from '../data/catalog';
+import * as repo from '../data/repository';
 
-export class ApiError extends Error {
-  constructor(message: string, public status: number) {
-    super(message);
-  }
-}
-
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const res = await fetch(`/api${path}`, {
-    ...init,
-    headers: init.body ? { 'content-type': 'application/json', ...init.headers } : init.headers,
-  });
-  if (!res.ok) {
-    let message = `Request failed (${res.status})`;
-    try {
-      message = ((await res.json()) as { error?: string }).error ?? message;
-    } catch {
-      /* non-JSON error */
-    }
-    throw new ApiError(message, res.status);
-  }
-  return (res.status === 204 ? undefined : await res.json()) as T;
-}
-
-const json = (body: unknown) => JSON.stringify(body);
+export { ApiError } from '../data/errors';
 
 export const api = {
+  /** Empty query → trending titles. */
   search: (q: string, region: Region, signal?: AbortSignal) =>
-    request<SearchResult[]>(`/search?region=${region}&q=${encodeURIComponent(q)}`, { signal }),
-  movie: (id: number, region: Region) =>
-    request<{ movie: Movie; availability: Availability }>(`/movies/${id}?region=${region}`),
-  providers: (region: Region) => request<Provider[]>(`/providers?region=${region}`),
+    q.trim() ? catalog.search(q.trim(), region, signal) : catalog.trending(region, signal),
+  movie: catalog.details,
+  providers: catalog.providers,
 
-  watchlist: (region: Region) => request<WatchlistEntry[]>(`/watchlist?region=${region}`),
-  add: (tmdbId: number, region: Region) =>
-    request<WatchlistEntry>(`/watchlist?region=${region}`, { method: 'POST', body: json({ tmdbId }) }),
-  update: (id: number, patch: WatchlistPatch, region: Region) =>
-    request<WatchlistEntry>(`/watchlist/${id}?region=${region}`, { method: 'PATCH', body: json(patch) }),
-  remove: (id: number) => request<void>(`/watchlist/${id}`, { method: 'DELETE' }),
+  watchlist: repo.listWatchlist,
+  add: repo.addToWatchlist,
+  update: (id: number, patch: Parameters<typeof repo.updateWatchlist>[1], _region?: Region) => repo.updateWatchlist(id, patch),
+  remove: repo.removeFromWatchlist,
 
-  settings: () => request<Settings>('/settings'),
-  saveSettings: (patch: Partial<Settings>) => request<Settings>('/settings', { method: 'PUT', body: json(patch) }),
+  settings: repo.getSettings,
+  saveSettings: repo.saveSettings,
 };

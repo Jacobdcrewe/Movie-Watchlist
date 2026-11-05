@@ -28,7 +28,12 @@ import {
   type ViewMode,
 } from './lib/watchlist';
 
-export default function App() {
+interface Props {
+  userEmail: string;
+  onSignOut: () => void;
+}
+
+export default function App({ userEmail, onSignOut }: Props) {
   const toast = useToast();
   const { settings, loaded, update: updateSettings } = useSettings(toast.show);
   const { region, myServices, theme } = settings;
@@ -84,6 +89,8 @@ export default function App() {
         onRegion={(r) => updateSettings({ region: r })}
         theme={theme}
         onToggleTheme={() => updateSettings({ theme: theme === 'dark' ? 'light' : 'dark' })}
+        userEmail={userEmail}
+        onSignOut={onSignOut}
         search={<SearchBox ref={searchRef} region={region} inList={inList} onAdd={add} showShortcut={!narrow} />}
       />
 

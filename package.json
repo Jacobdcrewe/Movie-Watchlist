@@ -2,25 +2,21 @@
   "name": "reel-watchlist",
   "private": true,
   "version": "1.0.0",
-  "description": "Reel \u2014 a movie watchlist with live streaming availability (TMDB / JustWatch)",
+  "description": "Reel \u2014 a private movie watchlist with live streaming availability (TMDB / JustWatch), hosted on GitHub Pages with Supabase auth + storage",
   "workspaces": [
-    "server",
     "client"
   ],
   "scripts": {
-    "dev": "concurrently -n server,client -c magenta,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
-    "build": "npm run typecheck -w server && npm run build -w client",
-    "start": "npm run start -w server",
-    "test": "npm run test -w server && npm run test -w client"
+    "dev": "npm run dev -w client",
+    "build": "npm run build -w client",
+    "preview": "npm run preview -w client",
+    "test": "npm run test -w client"
   },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">=22.12"
   },
   "allowScripts": {
-    "better-sqlite3": true,
     "esbuild": true
   }
 }
