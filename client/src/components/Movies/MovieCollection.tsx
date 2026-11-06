@@ -59,8 +59,10 @@ export function LoadingGrid({ scale }: { scale: number }) {
       {Array.from({ length: 8 }, (_, i) => (
         <div key={i} className={`glass ${styles.card} ${styles.skeleton}`}>
           <div className={styles.poster} />
-          <div className={styles.skelLine} />
-          <div className={styles.skelLine} style={{ width: '50%' }} />
+          <div className={styles.cardOverlay}>
+            <div className={styles.skelLine} />
+            <div className={styles.skelLine} style={{ width: '50%' }} />
+          </div>
         </div>
       ))}
     </div>

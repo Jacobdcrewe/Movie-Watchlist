@@ -28,32 +28,92 @@
 }
 
 .card {
+  /* Cards adapt to their own width (size slider, phones) via the container queries below. */
+  container-type: inline-size;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: var(--card-pad);
+  display: block;
+  padding: 0;
+  overflow: hidden;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  transition: transform 0.25s;
+  /* Glass: thick specular top edge + faint inner ring over the poster. */
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08), var(--shadow);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s;
   outline: none;
 }
 .card:hover,
 .card:focus-visible {
-  transform: translateY(-4px);
+  /* Lift, plus a gentle tilt toward the pointer (--rx/--ry are set by MovieCard). */
+  transform: perspective(900px) translateY(-3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.12), var(--shadow),
+    0 14px 32px oklch(0.55 0.14 280 / 0.16);
 }
 .card:focus-visible {
   box-shadow: var(--shadow), 0 0 0 2px var(--accent);
 }
 
+/* Full-bleed poster: the card's rounded corners clip it. */
 .cardPoster {
-  border-radius: var(--radius-s);
+  border-radius: 0;
+}
+/* A soft shade at the bottom so the glass plate has depth to sit on. */
+.cardPoster::after {
+  content: '';
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(4, 6, 10, 0.55));
+  pointer-events: none;
+}
+
+/*
+ * Prism light over the poster:
+ *  - a fixed diagonal specular sheen (like light on glass), always on;
+ *  - an iridescent teal → violet → pink → amber shimmer + a soft hotspot that
+ *    follow the pointer (--mx/--my), fading in on hover.
+ */
+.holo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 22%, transparent 38%);
+}
+.holo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  mix-blend-mode: soft-light;
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, 0.35), transparent 38%),
+    linear-gradient(
+      115deg,
+      transparent 20%,
+      oklch(0.82 0.14 190 / 0.75) 36%,
+      oklch(0.75 0.16 280 / 0.7) 50%,
+      oklch(0.8 0.15 340 / 0.7) 62%,
+      oklch(0.88 0.12 70 / 0.65) 74%,
+      transparent 88%
+    );
+  background-size: 100% 100%, 250% 250%;
+  background-position: 0 0, var(--mx, 50%) var(--my, 50%);
+  transition: opacity 0.35s;
+}
+.card:hover .holo::after,
+.card:focus-visible .holo::after {
+  opacity: 0.3;
+}
+
+/* Keep the prism rim visible on top of the poster. */
+.card::before {
+  z-index: 4;
 }
 
 .cardButtons {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
   display: flex;
   gap: 6px;
 }
@@ -66,11 +126,12 @@
   font-weight: 700;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(10, 11, 15, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(12, 16, 24, 0.34);
   color: #fff;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25);
   transition: transform 0.15s, background 0.15s, border-color 0.15s, color 0.15s, filter 0.15s;
 }
 
@@ -110,8 +171,9 @@
 
 .watchedPill {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  z-index: 3;
+  top: 12px;
+  left: 12px;
   font-size: 11px;
   font-weight: 600;
   padding: 4px 8px;
@@ -120,24 +182,95 @@
   color: #14161c;
 }
 
+.cardOverlay {
+  /* Light-on-dark tokens for everything inside (badges, +N, rent pills). */
+  --ink: #fff;
+  --sub: rgba(255, 255, 255, 0.78);
+  --faint: rgba(255, 255, 255, 0.6);
+  --field-line: rgba(255, 255, 255, 0.3);
+  --seg: rgba(255, 255, 255, 0.18);
+  --edge-opacity: 0.5;
+  position: absolute;
+  z-index: 2;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px 11px 11px;
+  border-radius: calc(var(--radius) - 8px);
+  color: #fff;
+  background: linear-gradient(180deg, rgba(14, 18, 28, 0.32), rgba(10, 13, 20, 0.52));
+  backdrop-filter: blur(14px) saturate(190%);
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.32), 0 8px 24px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+.cardOverlay > * {
+  pointer-events: auto;
+}
+
 .cardText {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 0 4px;
+  gap: 3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
 .cardTitle {
   font-size: calc(15px * clamp(0.85, var(--scale, 1), 1.15));
-  font-weight: 600;
+  font-weight: 650;
   letter-spacing: -0.01em;
-  line-height: 1.25;
+  line-height: 1.2;
   text-wrap: pretty;
+  /* Long titles: at most two lines. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .cardMeta {
   font-size: calc(12px * clamp(0.9, var(--scale, 1), 1.15));
   color: var(--sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Small cards (3 columns on a phone, or the size slider turned down). */
+@container (max-width: 150px) {
+  .cardOverlay {
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    gap: 5px;
+    padding: 7px 8px 8px;
+    border-radius: calc(var(--radius) - 12px);
+  }
+  .cardTitle {
+    font-size: 12.5px;
+  }
+  .cardMeta {
+    display: none;
+  }
+  .cardButtons {
+    top: 6px;
+    right: 6px;
+    gap: 4px;
+  }
+  .roundBtn {
+    width: 26px;
+    height: 26px;
+  }
+  .watchedPill {
+    top: 8px;
+    left: 8px;
+    font-size: 10px;
+    padding: 3px 6px;
+  }
 }
 
 .cardBadges {
@@ -146,9 +279,7 @@
   align-items: center;
   gap: 5px;
   min-width: 0;
-  min-height: 28px;
-  padding: 0 4px;
-  margin-top: auto;
+  min-height: 26px;
 }
 
 /* Grid cards: one line of service logos. */
@@ -397,13 +528,12 @@
   pointer-events: none;
 }
 .skeleton .poster {
-  border-radius: var(--radius-s);
   animation: pulse 1.4s ease-in-out infinite;
 }
 
 .skelLine {
   height: 12px;
-  margin: 0 4px;
+  margin: 0;
   border-radius: 6px;
   background: var(--field);
   animation: pulse 1.4s ease-in-out infinite;
@@ -412,5 +542,15 @@
 @keyframes pulse {
   50% {
     opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+  .holo::after {
+    display: none;
   }
 }
