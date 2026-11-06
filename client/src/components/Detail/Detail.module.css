@@ -334,35 +334,6 @@
   transform: translate(1px, -1px);
 }
 
-/* Featured "Watch on <service>" button. */
-.watchOn {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  height: 46px;
-  padding: 0 11px 0 18px;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.45);
-  transition: filter 0.15s, transform 0.15s;
-}
-.watchOn > :last-child {
-  margin-left: auto;
-}
-.watchOn:hover {
-  filter: brightness(1.08);
-}
-.watchOn:active {
-  transform: scale(0.98);
-}
-.watchOn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
 
 .muted {
   font-size: 13px;
@@ -462,6 +433,32 @@
 .trailerBtn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* Row of hero buttons (trailer, watch on…), clear of the close button. */
+.heroActions {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 64px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.heroActions .trailerBtn {
+  position: static;
+  max-width: 100%;
+  text-decoration: none;
+  white-space: nowrap;
+}
+/* "Watch on" is the main action: accent-tinted glass. */
+.heroWatch {
+  padding-left: 9px;
+  background: color-mix(in oklch, var(--accent) 34%, rgba(12, 16, 24, 0.5));
+  border-color: color-mix(in oklch, var(--accent) 60%, white 10%);
+}
+.heroWatch:hover {
+  background: color-mix(in oklch, var(--accent) 46%, rgba(12, 16, 24, 0.5));
 }
 
 .playerScrim {

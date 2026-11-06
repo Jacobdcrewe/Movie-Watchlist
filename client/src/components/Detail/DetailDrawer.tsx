@@ -31,11 +31,13 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
   // The trailer button appears only once TMDB has a playable trailer for this movie.
   const [trailer, setTrailer] = useState<Trailer | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [playingMovie, setPlayingMovie] = useState(false);
 
   useEffect(() => {
     let live = true;
     setTrailer(null);
     setPlaying(false);
+    setPlayingMovie(false);
     api
       .trailer(movie.id)
       .then((t) => live && setTrailer(t))
@@ -66,6 +68,19 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
               Play trailer
             </button>
           )}
+          <div className={styles.heroActions}>
+            {trailer && (
+              <button type="button" className={styles.trailerBtn} onClick={() => setPlaying(true)}>
+                <Play size={15} strokeWidth={2} fill="currentColor" aria-hidden />
+                Play trailer
+              </button>
+            )}
+            <button type="button" className={`${styles.trailerBtn} ${styles.heroWatch}`} onClick={() => setPlayingMovie(true)}>
+              <Play size={15} strokeWidth={2} fill="currentColor" aria-hidden />
+              Play Movie
+            </button>
+            </div>
+        
           <button ref={closeRef} type="button" className={styles.close} onClick={onClose} title="Close" aria-label="Close">
             <X size={18} strokeWidth={2} aria-hidden />
           </button>
@@ -119,6 +134,7 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
         </div>
       </aside>
       {playing && trailer && <TrailerPlayer trailer={trailer} title={movie.title} onClose={() => setPlaying(false)} />}
+      {playingMovie && <MoviePlayer id={movie.id} title={movie.title} onClose={() => setPlayingMovie(false)} />}
     </>
   );
 }
