@@ -1,4 +1,4 @@
-import type { Availability, Movie, Provider, Region } from '../../../shared/types';
+import type { Availability, Movie, Provider, Region, Trailer } from '../../../shared/types';
 
 // ---- Raw TMDB shapes (only the fields we use) ----
 
@@ -115,3 +115,31 @@ export function mapAvailability(region: Region, raw?: TmdbRegionProviders): Avai
 }
 
 export const emptyAvailability = (region: Region): Availability => mapAvailability(region);
+
+// ---- Videos ----
+
+export interface TmdbVideo {
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  official?: boolean;
+  iso_639_1?: string | null;
+  published_at?: string;
+}
+
+const TYPE_RANK: Record<string, number> = { Trailer: 0, Teaser: 1 };
+
+/** Best YouTube trailer: Trailer before Teaser, official, English, then newest. */
+export function pickTrailer(videos: TmdbVideo[] = []): Trailer | null {
+  const best = videos
+    .filter((v) => v.site === 'YouTube' && v.key && v.type in TYPE_RANK)
+    .sort(
+      (a, b) =>
+        TYPE_RANK[a.type] - TYPE_RANK[b.type] ||
+        Number(!!b.official) - Number(!!a.official) ||
+        Number(b.iso_639_1 === 'en') - Number(a.iso_639_1 === 'en') ||
+        (b.published_at ?? '').localeCompare(a.published_at ?? ''),
+    )[0];
+  return best ? { key: best.key, name: best.name } : null;
+}

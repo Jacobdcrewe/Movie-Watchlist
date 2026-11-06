@@ -1,4 +1,4 @@
-import type { Availability, Movie, Provider, Region, SearchResult } from '../../../shared/types';
+import type { Availability, Movie, Provider, Region, SearchResult, Trailer } from '../../../shared/types';
 import { tmdbGet } from './tmdb';
 import {
   emptyAvailability,
@@ -6,10 +6,12 @@ import {
   mapDetails,
   mapListItem,
   mapProvider,
+  pickTrailer,
   type TmdbMovieDetails,
   type TmdbMovieListItem,
   type TmdbPaged,
   type TmdbProvider,
+  type TmdbVideo,
   type TmdbWatchProviders,
 } from './tmdbMappers';
 
@@ -139,4 +141,14 @@ export async function providers(region: Region): Promise<Provider[]> {
   );
   const priority = (p: (typeof r.results)[number]) => p.display_priorities?.[region] ?? p.display_priority ?? 999;
   return [...r.results].sort((a, b) => priority(a) - priority(b)).map(mapProvider);
+}
+
+/** The movie's best YouTube trailer, or null when TMDB lists none. */
+export async function trailer(id: number): Promise<Trailer | null> {
+  const r = await tmdbGet<{ results?: TmdbVideo[] }>(
+    `/movie/${id}/videos`,
+    { language: 'en-US', include_video_language: 'en,null' },
+    24 * HOUR,
+  );
+  return pickTrailer(r.results);
 }

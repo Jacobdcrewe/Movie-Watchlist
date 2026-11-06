@@ -372,3 +372,95 @@
   background: var(--field);
   border: 1px solid var(--field-line);
 }
+
+/* ---------- Trailer ---------- */
+
+/* Frosted pill on the hero, mirroring the close button. */
+.trailerBtn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px 0 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(12, 16, 24, 0.38);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: background 0.15s, transform 0.15s;
+}
+.trailerBtn:hover {
+  background: rgba(12, 16, 24, 0.6);
+}
+.trailerBtn:active {
+  transform: scale(0.96);
+}
+.trailerBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.playerScrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(2, 3, 6, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.player {
+  position: fixed;
+  z-index: 61;
+  top: 50%;
+  left: 50%;
+  width: min(960px, 92vw);
+  aspect-ratio: 16 / 9;
+  max-height: 86vh;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  animation: playerIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.playerFrame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.playerClose {
+  position: fixed;
+  z-index: 62;
+  top: 16px;
+  right: 16px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes playerIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+}
+
+@media (max-width: 719.98px) {
+  .player {
+    width: calc(100vw - 32px);
+  }
+}

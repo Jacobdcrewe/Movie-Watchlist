@@ -14,6 +14,7 @@ export const api = {
     q.trim() ? catalog.search(q.trim(), region, signal) : catalog.trending(region, signal),
   movie: catalog.details,
   providers: catalog.providers,
+  trailer: catalog.trailer,
 
   lists: repo.ensureLists,
   createList: repo.createList,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { mapLimit } from './catalog';
-import { mapAvailability, mapDetails, mapListItem } from './tmdbMappers';
+import { mapAvailability, mapDetails, mapListItem, pickTrailer, type TmdbVideo } from './tmdbMappers';
 
 const CA = {
   link: 'https://www.themoviedb.org/movie/1/watch?locale=CA',
@@ -55,5 +55,38 @@ describe('mapLimit', () => {
     });
     expect(out).toEqual([2, 4, 6, 8, 10, 12, 14]);
     expect(peak).toBe(3);
+  });
+});
+
+describe('pickTrailer', () => {
+  const v = (o: Partial<TmdbVideo>): TmdbVideo => ({
+    key: 'k',
+    name: 'n',
+    site: 'YouTube',
+    type: 'Trailer',
+    official: true,
+    iso_639_1: 'en',
+    published_at: '2023-01-01',
+    ...o,
+  });
+
+  it('prefers an official English trailer, newest first', () => {
+    const t = pickTrailer([
+      v({ key: 'teaser', type: 'Teaser' }),
+      v({ key: 'fan', official: false }),
+      v({ key: 'fr', iso_639_1: 'fr' }),
+      v({ key: 'old', published_at: '2022-05-01' }),
+      v({ key: 'new', published_at: '2023-06-01' }),
+    ]);
+    expect(t?.key).toBe('new');
+  });
+
+  it('falls back to a teaser and ignores other sites and types', () => {
+    expect(pickTrailer([v({ key: 'vim', site: 'Vimeo' }), v({ key: 'clip', type: 'Clip' }), v({ key: 'tz', type: 'Teaser' })])?.key).toBe('tz');
+  });
+
+  it('returns null when there is nothing playable', () => {
+    expect(pickTrailer([])).toBeNull();
+    expect(pickTrailer(undefined)).toBeNull();
   });
 });

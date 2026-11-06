@@ -40,6 +40,12 @@ export interface Movie {
   backdropPath: string | null;
 }
 
+/** A movie's trailer: a YouTube video key. */
+export interface Trailer {
+  key: string;
+  name: string;
+}
+
 /** A search / trending result with availability for the requested region. */
 export interface SearchResult extends Movie {
   availability: Availability;
