@@ -10,6 +10,7 @@ import { StarRating } from './StarRating';
 import { TrailerPlayer } from './TrailerPlayer';
 import { WhereToWatch } from './WhereToWatch';
 import styles from './Detail.module.css';
+import { MoviePlayer } from './MoviePlayer';
 
 interface Props {
   entry: WatchlistEntry;
@@ -30,6 +31,7 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
   // The trailer button appears only once TMDB has a playable trailer for this movie.
   const [trailer, setTrailer] = useState<Trailer | null>(null);
   const [playing, setPlaying] = useState(false);
+
   useEffect(() => {
     let live = true;
     setTrailer(null);
@@ -93,7 +95,7 @@ export function DetailDrawer({ entry, regionName, myServices, onClose, onUpdate,
             <StarRating value={entry.rating} readOnly={readOnly} onChange={(rating) => onUpdate(movie.id, { rating })} />
           </div>
 
-          <WhereToWatch availability={entry.availability} myServices={myServices} regionName={regionName} />
+          <WhereToWatch availability={entry.availability} myServices={myServices} regionName={regionName} title={movie.title} />
 
           <NotesField key={movie.id} value={entry.note} readOnly={readOnly} onSave={(note) => onUpdate(movie.id, { note })} />
 

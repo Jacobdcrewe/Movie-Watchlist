@@ -307,6 +307,63 @@
   font: 500 13px var(--mono);
 }
 
+/* Rows open the movie on that service. */
+.providerLink {
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+.providerLink:hover {
+  background: rgba(127, 127, 127, 0.12);
+}
+.providerMine.providerLink:hover {
+  background: var(--accent-soft);
+  filter: brightness(1.15);
+}
+.providerLink:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: -2px;
+}
+.providerGo {
+  flex: none;
+  color: var(--faint);
+  transition: transform 0.15s, color 0.15s;
+}
+.providerLink:hover .providerGo {
+  color: var(--ink);
+  transform: translate(1px, -1px);
+}
+
+/* Featured "Watch on <service>" button. */
+.watchOn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 46px;
+  padding: 0 11px 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.45);
+  transition: filter 0.15s, transform 0.15s;
+}
+.watchOn > :last-child {
+  margin-left: auto;
+}
+.watchOn:hover {
+  filter: brightness(1.08);
+}
+.watchOn:active {
+  transform: scale(0.98);
+}
+.watchOn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .muted {
   font-size: 13px;
   color: var(--sub);
